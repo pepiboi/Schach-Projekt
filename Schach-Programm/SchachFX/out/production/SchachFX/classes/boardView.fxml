@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BoardController">
+    <children>
+        <GridPane fx:id="boardId" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #AAABBB;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+            <columnConstraints>
+                <ColumnConstraints fx:id="ABoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="BBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="CBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="DBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="EBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="FBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="GBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints fx:id="HBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints fx:id="eightBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="svenBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="sixBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="fiveBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="fourBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="threeBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="twoBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints fx:id="oneBoardID" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="darkolivegreen" height="105.0" layoutX="10.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="105.0" />
+         </children>
+        </GridPane>
+        <Text layoutX="19.0" layoutY="808.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
+        <Text layoutX="19.0" layoutY="708.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
+        <Text layoutX="19.0" layoutY="608.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
+        <Text layoutX="19.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+        <Text layoutX="19.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
+        <Text layoutX="19.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6" />
+        <Text layoutX="19.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" />
+        <Text layoutX="19.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8" AnchorPane.bottomAnchor="788.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="874.53125" AnchorPane.topAnchor="95.0" />
+        <Text layoutX="95.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
+        <Text layoutX="195.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B" />
+        <Text layoutX="295.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" />
+        <Text layoutX="395.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
+        <Text layoutX="495.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E" />
+        <Text layoutX="595.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" />
+        <Text layoutX="695.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G" />
+        <Text layoutX="795.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="H" />
+        <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="890.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../images/ExitIcon.png" />
+            </image></ImageView>
+    </children>
+</AnchorPane>
