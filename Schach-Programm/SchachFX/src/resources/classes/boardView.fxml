@@ -50,7 +50,7 @@
         <Text layoutX="795.0" layoutY="876.0" strokeType="OUTSIDE" strokeWidth="0.0" text="H" />
         <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="890.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../images/ExitIcon.png" />
+                <Image url="@../images/ExitIcon.png" />
             </image></ImageView>
     </children>
 </AnchorPane>

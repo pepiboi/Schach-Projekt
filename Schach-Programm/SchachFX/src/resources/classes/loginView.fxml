@@ -40,7 +40,7 @@
         </Label>
         <ImageView fitHeight="80.0" fitWidth="80.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
             <image>
-                <Image url="@../../images/ProfilePrictuer.jpg" />
+                <Image url="@../images/ProfilePrictuer.jpg" />
             </image>
             <effect>
                 <Blend />
