@@ -136,6 +136,15 @@
       <Text layoutX="624.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" wrappingWidth="6.46875" />
       <Text layoutX="722.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G" wrappingWidth="6.46875" />
       <Text layoutX="823.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="H" wrappingWidth="6.46875" />
+      <ListView layoutX="921.0" layoutY="150.0" opacity="0.8" prefHeight="322.0" prefWidth="97.0" />
+      <ListView layoutX="1050.0" layoutY="150.0" opacity="0.8" prefHeight="322.0" prefWidth="97.0" />
+      <Text layoutX="929.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="White moves:" wrappingWidth="81.46875" />
+      <Text layoutX="1058.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Black moves:" wrappingWidth="81.46875" />
+      <ImageView fitHeight="40.0" fitWidth="29.0" layoutX="1135.0" layoutY="31.0" onMouseClicked="#onMouseClickedExit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Exit.png" />
+         </image>
+      </ImageView>
     </children>
    <padding>
       <Insets right="240.0" top="100.0" />
