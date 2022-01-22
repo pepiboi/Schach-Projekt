@@ -1,5 +1,6 @@
 package classes;
 
+import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,10 +10,12 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
-    public static FXMLLoader fxmlLoader;
+    public static Stage fxmlLoader;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
+        fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         primaryStage.setResizable(false);
         //primaryStage.initStyle(StageStyle.UNDECORATED);

@@ -18,6 +18,11 @@ public class LoginController implements Initializable {
 
 
     public Button boardButton;
+    Stage stage;
+
+    public LoginController(Stage primaryStage) {
+        this.stage = primaryStage;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,7 +37,7 @@ public class LoginController implements Initializable {
             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
-            Stage stage = new Stage();
+
             stage.setTitle("Board");
             stage.setScene(scene);
             stage.show();
