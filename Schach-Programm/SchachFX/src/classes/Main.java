@@ -11,6 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Server server = new Server();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
         primaryStage.setResizable(false);
