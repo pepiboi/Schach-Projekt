@@ -36,11 +36,6 @@ public class LoginController implements Initializable {
             stage.setTitle("Board");
             stage.setScene(scene);
             stage.show();
-
-            FXMLLoader fxmlLoader2 = new FXMLLoader(Main.class.getResource("loginView.fxml"));
-            Scene scene2 = new Scene(fxmlLoader.load(), 600, 600);
-            Stage stage2 = new Stage();
-            stage2.close();
         } catch (IOException e) {
             System.out.println("open View did not work");
         }

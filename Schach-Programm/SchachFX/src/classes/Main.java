@@ -9,9 +9,10 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
+    public static FXMLLoader fxmlLoader;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
+        fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         primaryStage.setResizable(false);
         //primaryStage.initStyle(StageStyle.UNDECORATED);
