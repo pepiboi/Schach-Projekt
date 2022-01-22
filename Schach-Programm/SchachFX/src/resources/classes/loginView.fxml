@@ -47,6 +47,6 @@
             </effect></ImageView>
         <Separator nodeOrientation="RIGHT_TO_LEFT" prefHeight="3.0" prefWidth="394.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP" />
         <Separator orientation="VERTICAL" prefHeight="91.0" prefWidth="6.0" GridPane.columnIndex="2" />
-      <Button mnemonicParsing="false" onAction="#onClick" text="BoardView" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Button fx:id="boardButton" mnemonicParsing="false" onAction="#onClick" text="BoardView" GridPane.columnIndex="2" GridPane.rowIndex="4" />
     </children>
 </GridPane>

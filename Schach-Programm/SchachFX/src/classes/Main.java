@@ -11,8 +11,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         primaryStage.setResizable(false);
         //primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Game");
