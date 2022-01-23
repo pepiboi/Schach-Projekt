@@ -15,13 +15,11 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
         fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
-        Server server = new Server();
         //primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        Button button = new Button();
+        new Client();
     }
 
 
