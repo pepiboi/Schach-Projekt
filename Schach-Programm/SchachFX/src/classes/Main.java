@@ -14,9 +14,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+<<<<<<< HEAD
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
         fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+=======
+        Server server = new Server();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
+>>>>>>> connectivity
         primaryStage.setResizable(false);
         //primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Game");
