@@ -30,8 +30,8 @@
                 <Font name="Felix Titling" size="10.0" />
             </font>
         </Label>
-        <TextField prefHeight="25.0" prefWidth="264.0" promptText="IP-Addresse eingeben" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-        <Button mnemonicParsing="false" text="Enter" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+        <TextField fx:id="ipAddressID" prefHeight="25.0" prefWidth="264.0" promptText="IP-Addresse eingeben" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button mnemonicParsing="false" onMouseClicked="#onEnterIP" text="Enter" GridPane.columnIndex="2" GridPane.rowIndex="3" />
         <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label prefHeight="19.0" prefWidth="338.0" text="kürzlich verwendete IP-Addressen:" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <font>
