@@ -16,10 +16,10 @@ public class Main extends Application {
         fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         //primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
         primaryStage.show();
-        new Client();
     }
 
 

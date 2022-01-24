@@ -30,11 +30,11 @@
                 <Font name="Cambria" size="12.0" />
             </font>
         </Label>
-        <TextField prefHeight="25.0" prefWidth="405.0" promptText="IP-Addresse eingeben" style="-fx-background-color: #757575;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <TextField prefHeight="25.0" fx:id="ipAddressID" prefWidth="405.0" promptText="IP-Addresse eingeben" style="-fx-background-color: #757575;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
          </GridPane.margin></TextField>
-        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6e6e6e;" text="Enter" textAlignment="CENTER" textFill="#bfbfbf" GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <Button alignment="CENTER" onMouseClicked="#onEnterIP" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6e6e6e;" text="Enter" textAlignment="CENTER" textFill="#bfbfbf" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin></Button>
