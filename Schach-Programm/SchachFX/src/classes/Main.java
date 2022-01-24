@@ -1,5 +1,6 @@
 package classes;
 
+import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,14 +13,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 900);
-        primaryStage.setResizable(false);
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        primaryStage.setTitle("Login");
+        fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 600);
+        //primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        Button button = new Button();
+        new Client();
     }
 
 
