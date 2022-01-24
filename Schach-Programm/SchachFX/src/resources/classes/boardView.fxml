@@ -7,9 +7,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minWidth="930.0" prefHeight="1007.0" prefWidth="1177.0" style="-fx-background-color: LIGHTGREY;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BoardController">
+<AnchorPane minWidth="930.0" prefHeight="1007.0" prefWidth="1177.0" style="-fx-background-color: #383838;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BoardController">
     <children>
-        <GridPane fx:id="boardId" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #AAABBB;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+        <GridPane fx:id="boardId" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" style="-fx-background-color: #AAABBB;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
             <columnConstraints>
                 <ColumnConstraints fx:id="ABoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints fx:id="BBoardID" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -225,52 +225,85 @@
                </image></ImageView>
          </children>
         </GridPane>
-        <Text layoutX="19.0" layoutY="903.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" />
-        <Text layoutX="19.0" layoutY="804.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2" />
-        <Text layoutX="19.0" layoutY="711.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3" />
-        <Text layoutX="19.0" layoutY="607.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
-        <Text layoutX="19.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" />
-        <Text layoutX="19.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6" />
-        <Text layoutX="19.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7" />
-        <Text layoutX="19.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8" AnchorPane.bottomAnchor="788.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="874.53125" AnchorPane.topAnchor="95.0" />
-      <MenuBar prefHeight="25.0" prefWidth="1177.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <Text layoutX="97.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" wrappingWidth="6.46875" />
-      <Text layoutX="205.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B" wrappingWidth="6.46875" />
-      <Text layoutX="307.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" wrappingWidth="6.46875" />
-      <Text layoutX="411.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" wrappingWidth="6.46875" />
-      <Text layoutX="513.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E" wrappingWidth="6.46875" />
-      <Text layoutX="624.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" wrappingWidth="6.46875" />
-      <Text layoutX="722.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G" wrappingWidth="6.46875" />
-      <Text layoutX="823.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="H" wrappingWidth="6.46875" />
-      <ListView layoutX="921.0" layoutY="150.0" opacity="0.8" prefHeight="322.0" prefWidth="97.0" />
-      <ListView layoutX="1050.0" layoutY="150.0" opacity="0.8" prefHeight="322.0" prefWidth="97.0" />
-      <Text layoutX="929.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="White moves:" wrappingWidth="81.46875" />
-      <Text layoutX="1058.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Black moves:" wrappingWidth="81.46875" />
-      <ImageView fitHeight="40.0" fitWidth="29.0" layoutX="1135.0" layoutY="31.0" onMouseClicked="#onMouseClickedExit" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/Exit.png" />
-         </image>
-      </ImageView>
+        <Text fill="WHITE" layoutX="19.0" layoutY="903.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="804.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="711.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="607.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" AnchorPane.bottomAnchor="788.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="874.53125" AnchorPane.topAnchor="95.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="97.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="205.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="307.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="411.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="513.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="624.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="F" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="729.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="G" wrappingWidth="6.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="830.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="H" wrappingWidth="12.46875">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <ListView layoutX="921.0" layoutY="150.0" opacity="0.8" prefHeight="713.0" prefWidth="97.0" style="-fx-background-color: #757575;" />
+      <ListView layoutX="1050.0" layoutY="150.0" opacity="0.8" prefHeight="713.0" prefWidth="97.0" style="-fx-background-color: #757575;" />
+      <Text fill="WHITE" layoutX="929.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="White moves:" wrappingWidth="104.99999999999997">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
+      <Text fill="WHITE" layoutX="1058.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Black moves:" wrappingWidth="104.5">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Text>
     </children>
    <padding>
       <Insets right="240.0" top="100.0" />
    </padding>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </AnchorPane>

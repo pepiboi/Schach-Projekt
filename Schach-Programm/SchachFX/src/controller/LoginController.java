@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
 
+    public static String ipClient;
     public Button boardButton;
     Stage stage;
 
