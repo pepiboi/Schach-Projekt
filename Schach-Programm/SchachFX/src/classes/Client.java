@@ -1,6 +1,9 @@
 package classes;
 
+import controller.LoginController;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -17,11 +20,11 @@ public class Client {
     {
         try{//im Socket muss die IP geändert werden
             String name;
-            toServer = new Socket("localhost",1234);
+            toServer = new Socket(LoginController.ipClient,1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
             streamToServer = new PrintStream(toServer.getOutputStream());
             System.out.println("Enter Connection Name");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
             name = reader.readLine();
             streamToServer.println(name);
             String str = streamFromServer.readLine();
