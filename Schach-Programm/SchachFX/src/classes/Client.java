@@ -20,13 +20,12 @@ public class Client {
     {
         try{//im Socket muss die IP geändert werden
             String name;
-            toServer = new Socket("172.20.10.2",1234);
             toServer = new Socket(LoginController.ipClient,1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
             streamToServer = new PrintStream(toServer.getOutputStream());
             System.out.println("Enter Connection Name");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
-            name = reader.readLine();
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
+            name = toServer.getRemoteSocketAddress().toString();
             streamToServer.println(name);
             String str = streamFromServer.readLine();
             System.out.println("The Server Says "+str);
@@ -38,6 +37,6 @@ public class Client {
     }
 
     public static void main(String[] args) {
-
+        new Client();
     }
 }

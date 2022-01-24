@@ -17,7 +17,7 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
         //primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Game");
+        primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

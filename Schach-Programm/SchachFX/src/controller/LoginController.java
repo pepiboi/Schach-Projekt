@@ -57,9 +57,8 @@ public class LoginController implements Initializable {
     public void onEnterIP(MouseEvent mouseEvent) {
         ipClient = ipAddressID.getText();
         if (ipClient.equals("null") || ipClient.equals("") || ipClient.isEmpty()) {
-            System.out.println("IP-Address wurde falsch eingegeben");
+            System.out.println("IP-Address wurde nicht eingegeben");
             ipClient = "localhost";
-            ipClient = ipAddressID.getText();
             System.out.println("IP wurde auf localhost gesetzt");
         }
 
