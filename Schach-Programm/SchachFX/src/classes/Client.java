@@ -18,14 +18,16 @@ public class Client {
     }
     private void connectionToServer()
     {
-        try{//im Socket muss die IP geändert werden
+        try{
             String name;
             toServer = new Socket(LoginController.ipClient,1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
             streamToServer = new PrintStream(toServer.getOutputStream());
             System.out.println("Enter Connection Name");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            name = reader.readLine();
             //BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
-            name = toServer.getRemoteSocketAddress().toString();
+            //name = toServer.getRemoteSocketAddress().toString();
             streamToServer.println(name);
             String str = streamFromServer.readLine();
             System.out.println("The Server Says "+str);
