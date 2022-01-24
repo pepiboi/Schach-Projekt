@@ -17,7 +17,7 @@ public class Client {
     {
         try{//im Socket muss die IP geändert werden
             String name;
-            toServer = new Socket("localhost",1234);
+            toServer = new Socket("172.20.10.2",1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
             streamToServer = new PrintStream(toServer.getOutputStream());
             System.out.println("Enter Connection Name");
