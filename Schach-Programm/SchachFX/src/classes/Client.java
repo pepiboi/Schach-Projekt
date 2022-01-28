@@ -3,6 +3,7 @@ package classes;
 import controller.LoginController;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -25,6 +26,8 @@ public class Client {
             System.out.println("Enter Connection Name");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             name = reader.readLine();
+            //BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
+            //name = toServer.getRemoteSocketAddress().toString();
             streamToServer.println(name);
             String str = streamFromServer.readLine();
             System.out.println("The Server Says "+str);
