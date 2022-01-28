@@ -46,10 +46,6 @@ public class BoardController {
     public ImageView whitePawnSix;
     public ImageView whitePawnSeven;
 
-    public void onMouseClickedExit(MouseEvent mouseEvent) {
-        System.out.println("Programm wird geschlossen");
-        System.exit(1);
-    }
 
     private void movePawn(){
 
