@@ -59,7 +59,7 @@ public class BoardController {
 
     private void clickedRectanglePawn(Node selectedPane) {
         try {
-            if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(pawnPane)) {
+            if (GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(pawnPane)) {
 
                 if (GridPane.getRowIndex(selectedPane) + 2 == 6 || GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane)) {
                     whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
@@ -68,6 +68,8 @@ public class BoardController {
                     GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
                     GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(pawnPane));
                 }
+            }else if(GridPane.getRowIndex(selectedPane) == null){
+                //Dann darf sich der Spieler eine Figur zurückholen
             }
         } catch (Exception e) {
             System.out.println("Exception was thrown at moving Pawn");
@@ -76,27 +78,41 @@ public class BoardController {
 
     private void clickedBlackPawn(Node selectedPane) {
         try {
-            if (GridPane.getColumnIndex(pawnPane) == null && GridPane.getRowIndex(selectedPane) != null && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) - 1 == 0) {
+            if (GridPane.getColumnIndex(pawnPane) == null && GridPane.getRowIndex(selectedPane) != 7 && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) - 1 == 0) {
                 if (selectedPane.toString().contains("ImageView")) {
                     if (selectedPane.getId().contains("black")) {
+                        whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
+                        whiteMovesID.getItems().add(pawnPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
                         selectedPane.setVisible(false);
                         GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
                         GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
                     }
                 }
-            } else if (GridPane.getColumnIndex(pawnPane) == 1 && GridPane.getRowIndex(selectedPane) != null && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) == null) {
-
+            } else if (GridPane.getColumnIndex(pawnPane) == 1 && GridPane.getRowIndex(selectedPane) != 7 && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) == 0 || GridPane.getRowIndex(selectedPane) == null) {
                 if (selectedPane.toString().contains("ImageView")) {
                     if (selectedPane.getId().contains("black")) {
+                        whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
+                        whiteMovesID.getItems().add(pawnPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
                         selectedPane.setVisible(false);
                         GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
                         GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
                     }
                 }
-            } else if (GridPane.getRowIndex(selectedPane) != null && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && (GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) - 1 == GridPane.getColumnIndex(pawnPane))) {
-
+            } else if (GridPane.getRowIndex(selectedPane) != 7 && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && (GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) - 1 == GridPane.getColumnIndex(pawnPane)) || GridPane.getRowIndex(selectedPane) == null) {
                 if (selectedPane.toString().contains("ImageView")) {
                     if (selectedPane.getId().contains("black")) {
+                        whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
+                        whiteMovesID.getItems().add(pawnPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                        selectedPane.setVisible(false);
+                        GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                        GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
+                    }
+                }
+            }else if (GridPane.getColumnIndex(selectedPane) == null && GridPane.getRowIndex(selectedPane) == null && (GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) - 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) == null) || GridPane.getRowIndex(selectedPane) == null) {
+                if (selectedPane.toString().contains("ImageView")) {
+                    if (selectedPane.getId().contains("black")) {
+                        whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
+                        whiteMovesID.getItems().add(pawnPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
                         selectedPane.setVisible(false);
                         GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
                         GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));

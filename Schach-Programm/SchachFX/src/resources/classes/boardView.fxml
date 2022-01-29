@@ -289,16 +289,16 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Text>
-      <ListView fx:id="whiteMovesID" layoutX="921.0" layoutY="150.0" opacity="0.8" prefHeight="713.0" prefWidth="150.0" style="-fx-background-color: #757575;" />
-      <ListView fx:id="blackMovesID" layoutX="1076.0" layoutY="150.0" opacity="0.8" prefHeight="713.0" prefWidth="79.0" style="-fx-background-color: #757575;">
+      <ListView fx:id="whiteMovesID" layoutX="921.0" layoutY="150.0" opacity="0.8" prefHeight="355.0" prefWidth="215.0" style="-fx-background-color: #757575;" />
+      <ListView fx:id="blackMovesID" layoutX="921.0" layoutY="549.0" opacity="0.8" prefHeight="355.0" prefWidth="215.0" style="-fx-background-color: #757575;">
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding></ListView>
-      <Text fill="WHITE" layoutX="929.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="White moves:" wrappingWidth="104.99999999999997">
+      <Text fill="WHITE" layoutX="976.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="White moves:" wrappingWidth="104.99999999999997">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Text>
-      <Text fill="WHITE" layoutX="1058.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Black moves:" wrappingWidth="104.5">
+      <Text fill="WHITE" layoutX="982.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Black moves:" wrappingWidth="104.5">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Text>
