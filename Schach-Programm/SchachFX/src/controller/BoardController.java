@@ -8,6 +8,8 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class BoardController {
     public GridPane boardId;
     public ImageView onClickExit;
@@ -47,27 +49,48 @@ public class BoardController {
     public ImageView whitePawnSix;
     public ImageView whitePawnSeven;
     public boolean clickedWhitePawn;
-
+    public String pieceKoordinates;
+    public Node pawnPane;
     /*private void movePawn(Node selectedPane) {
         System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
     }*/
 
-    private void clickedRectanglePawn(Node selectedPane){
+    private void clickedRectanglePawn(Node selectedPane) {
         System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-        
+        if (GridPane.getRowIndex(selectedPane) == null && GridPane.getColumnIndex(selectedPane) != null) {
+            if (((GridPane.getRowIndex(selectedPane)) + " " + (GridPane.getColumnIndex(selectedPane) - 1)).equals(pieceKoordinates)) {
+                selectedPane = pawnPane;
+            }
+        }else if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) == null) {
+            if (((GridPane.getRowIndex(selectedPane)-1) + " " + (GridPane.getColumnIndex(selectedPane))).equals(pieceKoordinates)) {
+                selectedPane = pawnPane;
+            }
+        }else if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) != null) {
+            if (((GridPane.getRowIndex(selectedPane) -1) + " " + (GridPane.getColumnIndex(selectedPane) - 1)).equals(pieceKoordinates)) {
+                selectedPane = pawnPane;
+            }
+        }
     }
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
-        if (selectedPane.getId().equals("whitePawnZero") || selectedPane.getId().equals("whitePawnOne") || selectedPane.getId().equals("whitePawnTwo") || selectedPane.getId().equals("whitePawnThree") || selectedPane.getId().equals("whitePawnFour") || selectedPane.getId().equals("whitePawnFive") || selectedPane.getId().equals("whitePawnSix") || selectedPane.getId().equals("whitePawnSeven")) {
-            clickedWhitePawn = true;
-            //movePawn(selectedPane);
-        }else if (selectedPane instanceof Rectangle) {
+        System.out.println(selectedPane.toString());
+        if (selectedPane.toString().contains("ImageView")) {
+            if (selectedPane.getId().contains("whitePawn")) {
+                System.out.println("WhitePawn");
+                clickedWhitePawn = true;
+                pawnPane = selectedPane;
+                pieceKoordinates = GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane);
+                //movePawn(selectedPane);
+            }
+        } else if (selectedPane.toString().contains("Rectangle")) {
+
             if (clickedWhitePawn == true) {
                 clickedRectanglePawn(selectedPane);
-            }else{
+            } else {
                 System.out.println("No Piece selected!");
             }
+
         }
     }
 }
