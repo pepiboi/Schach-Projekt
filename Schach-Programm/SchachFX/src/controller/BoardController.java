@@ -56,31 +56,26 @@ public class BoardController {
     }*/
 
     private void clickedRectanglePawn(Node selectedPane) {
-        System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-        if (GridPane.getRowIndex(selectedPane) == null && GridPane.getColumnIndex(selectedPane) != null) {
-            if (((GridPane.getRowIndex(selectedPane)) + " " + (GridPane.getColumnIndex(selectedPane) - 1)).equals(pieceKoordinates)) {
-                selectedPane = pawnPane;
-            }
-        }else if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) == null) {
-            if (((GridPane.getRowIndex(selectedPane)-1) + " " + (GridPane.getColumnIndex(selectedPane))).equals(pieceKoordinates)) {
-                selectedPane = pawnPane;
-            }
-        }else if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) != null) {
-            if (((GridPane.getRowIndex(selectedPane) -1) + " " + (GridPane.getColumnIndex(selectedPane) - 1)).equals(pieceKoordinates)) {
-                selectedPane = pawnPane;
+        if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(pawnPane)) {
+            System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+            if ((GridPane.getRowIndex(selectedPane)+1) == GridPane.getRowIndex(pawnPane)) {
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(pawnPane));
             }
         }
     }
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
-        System.out.println(selectedPane.toString());
+        //System.out.println(selectedPane.toString());
         if (selectedPane.toString().contains("ImageView")) {
             if (selectedPane.getId().contains("whitePawn")) {
-                System.out.println("WhitePawn");
+                //System.out.println("WhitePawn");
                 clickedWhitePawn = true;
                 pawnPane = selectedPane;
                 pieceKoordinates = GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane);
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
                 //movePawn(selectedPane);
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
