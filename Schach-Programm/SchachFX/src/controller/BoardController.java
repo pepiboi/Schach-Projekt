@@ -53,8 +53,8 @@ public class BoardController {
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node)mouseEvent.getSource();
-        if (selectedPane.getId().equals(whitePawnZero) || selectedPane.getId().equals(whitePawnOne) ||selectedPane.getId().equals(whitePawnTwo) ||selectedPane.getId().equals(whitePawnThree) ||selectedPane.getId().equals(whitePawnFour) ||selectedPane.getId().equals(whitePawnFive) ||selectedPane.getId().equals(whitePawnSix) ||selectedPane.getId().equals(whitePawnSeven)){
-
+        if (selectedPane.getId().equals("whitePawnZero") || selectedPane.getId().equals("whitePawnOne") ||selectedPane.getId().equals("whitePawnTwo") ||selectedPane.getId().equals("whitePawnThree") ||selectedPane.getId().equals("whitePawnFour") ||selectedPane.getId().equals("whitePawnFive") ||selectedPane.getId().equals("whitePawnSix") ||selectedPane.getId().equals("whitePawnSeven")){
+            selectedPane.setVisible(false);
         }
     }
 }
