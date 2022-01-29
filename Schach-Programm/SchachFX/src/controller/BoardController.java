@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
@@ -49,20 +50,61 @@ public class BoardController {
     public ImageView whitePawnSix;
     public ImageView whitePawnSeven;
     public boolean clickedWhitePawn;
-    public String pieceKoordinates;
     public Node pawnPane;
+    public ListView whiteMovesID;
+    public ListView blackMovesID;
     /*private void movePawn(Node selectedPane) {
         System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
     }*/
 
     private void clickedRectanglePawn(Node selectedPane) {
-        if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(pawnPane)) {
-            System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-            if ((GridPane.getRowIndex(selectedPane)+1) == GridPane.getRowIndex(pawnPane)) {
-                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-                GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
-                GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(pawnPane));
+        try {
+            if (GridPane.getRowIndex(selectedPane) != null && GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(pawnPane)) {
+
+                if (GridPane.getRowIndex(selectedPane) + 2 == 6 || GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane)) {
+                    whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
+                    whiteMovesID.getItems().add(pawnPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                    System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                    GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                    GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(pawnPane));
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving Pawn");
+        }
+    }
+
+    private void clickedBlackPawn(Node selectedPane) {
+        try {
+            if (GridPane.getColumnIndex(pawnPane) == null && GridPane.getRowIndex(selectedPane) != null && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) - 1 == 0) {
+                if (selectedPane.toString().contains("ImageView")) {
+                    if (selectedPane.getId().contains("black")) {
+                        selectedPane.setVisible(false);
+                        GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                        GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
+                    }
+                }
+            } else if (GridPane.getColumnIndex(pawnPane) == 1 && GridPane.getRowIndex(selectedPane) != null && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) == null) {
+
+                if (selectedPane.toString().contains("ImageView")) {
+                    if (selectedPane.getId().contains("black")) {
+                        selectedPane.setVisible(false);
+                        GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                        GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
+                    }
+                }
+            } else if (GridPane.getRowIndex(selectedPane) != null && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && (GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) - 1 == GridPane.getColumnIndex(pawnPane))) {
+
+                if (selectedPane.toString().contains("ImageView")) {
+                    if (selectedPane.getId().contains("black")) {
+                        selectedPane.setVisible(false);
+                        GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                        GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving Pawn");
         }
     }
 
@@ -74,9 +116,12 @@ public class BoardController {
                 //System.out.println("WhitePawn");
                 clickedWhitePawn = true;
                 pawnPane = selectedPane;
-                pieceKoordinates = GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane);
-                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-                //movePawn(selectedPane);
+            } else if (selectedPane.getId().contains("black")) {
+                if (clickedWhitePawn == true) {
+                    clickedBlackPawn(selectedPane);
+                } else {
+                    System.out.println("No Piece selected!");
+                }
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
 
