@@ -8,11 +8,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server{
-    ServerSocket serverSocket;
-    PrintStream streamToClient;
-    BufferedReader streamFromClient;
-    Socket clientSocket;
-    static int count = 0;
+     ServerSocket serverSocket;
+     PrintStream streamToClient;
+     BufferedReader streamFromClient;
+     Socket clientSocket;
+     int count = 0;
 
     public Server() {
         try{

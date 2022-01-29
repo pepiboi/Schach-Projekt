@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #383838;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #383838;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="111.0" />
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="417.0" />
@@ -30,11 +30,11 @@
                 <Font name="Cambria" size="12.0" />
             </font>
         </Label>
-        <TextField prefHeight="25.0" fx:id="ipAddressID" prefWidth="405.0" promptText="IP-Addresse eingeben" style="-fx-background-color: #757575;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+        <TextField fx:id="ipAddressID" prefHeight="25.0" prefWidth="405.0" promptText="IP-Addresse eingeben" style="-fx-background-color: #757575;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
          </GridPane.margin></TextField>
-        <Button alignment="CENTER" onMouseClicked="#onEnterIP" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6e6e6e;" text="Enter" textAlignment="CENTER" textFill="#bfbfbf" GridPane.columnIndex="2" GridPane.rowIndex="3">
+        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#onEnterIP" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #6e6e6e;" text="Enter" textAlignment="CENTER" textFill="#bfbfbf" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="5.0" />
          </GridPane.margin></Button>
@@ -50,5 +50,10 @@
             <Image url="@../images/Menue.png" />
          </image>
       </ImageView>
+      <Button mnemonicParsing="false" onMouseClicked="#onStartServer" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: #757575;" text="Start Server" textFill="#bfbfbf" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </GridPane.margin>
+      </Button>
     </children>
 </GridPane>

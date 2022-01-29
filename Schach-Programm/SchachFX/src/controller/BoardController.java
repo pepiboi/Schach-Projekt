@@ -6,6 +6,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 
 public class BoardController {
     public GridPane boardId;
@@ -45,16 +46,29 @@ public class BoardController {
     public ImageView whitePawnFive;
     public ImageView whitePawnSix;
     public ImageView whitePawnSeven;
+    public boolean clickedWhitePawn;
 
+    /*private void movePawn(Node selectedPane) {
+        System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+    }*/
 
-    private void movePawn(){
-
+    private void clickedRectanglePawn(Node selectedPane){
+        System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+        
     }
 
     public void onMouseClick(MouseEvent mouseEvent) {
-        Node selectedPane = (Node)mouseEvent.getSource();
-        if (selectedPane.getId().equals("whitePawnZero") || selectedPane.getId().equals("whitePawnOne") ||selectedPane.getId().equals("whitePawnTwo") ||selectedPane.getId().equals("whitePawnThree") ||selectedPane.getId().equals("whitePawnFour") ||selectedPane.getId().equals("whitePawnFive") ||selectedPane.getId().equals("whitePawnSix") ||selectedPane.getId().equals("whitePawnSeven")){
-            selectedPane.setVisible(false);
+        Node selectedPane = (Node) mouseEvent.getSource();
+        if (selectedPane.getId().equals("whitePawnZero") || selectedPane.getId().equals("whitePawnOne") || selectedPane.getId().equals("whitePawnTwo") || selectedPane.getId().equals("whitePawnThree") || selectedPane.getId().equals("whitePawnFour") || selectedPane.getId().equals("whitePawnFive") || selectedPane.getId().equals("whitePawnSix") || selectedPane.getId().equals("whitePawnSeven")) {
+            clickedWhitePawn = true;
+            //movePawn(selectedPane);
+        }else if (selectedPane instanceof Rectangle) {
+            if (clickedWhitePawn == true) {
+                clickedRectanglePawn(selectedPane);
+            }else{
+                System.out.println("No Piece selected!");
+            }
         }
     }
 }
+

@@ -2,7 +2,7 @@ package controller;
 
 import classes.Client;
 import classes.Main;
-import com.sun.corba.se.spi.activation.Server;
+import classes.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -64,5 +64,10 @@ public class LoginController implements Initializable {
 
         new Client();
 
+    }
+
+    public void onStartServer(MouseEvent mouseEvent) {
+        Server server = new Server();
+        server.connect();
     }
 }

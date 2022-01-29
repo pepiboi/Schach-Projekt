@@ -12,6 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
         fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
@@ -20,6 +21,7 @@ public class Main extends Application {
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
 
