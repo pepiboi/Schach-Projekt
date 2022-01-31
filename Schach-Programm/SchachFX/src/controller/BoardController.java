@@ -2,6 +2,7 @@ package controller;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
@@ -54,11 +55,13 @@ public class BoardController {
     public boolean clickedWhiteQueen;
     public boolean clickedWhiteBishoph;
     public boolean clickedWhiteKnight;
+    public boolean clickedWhiteRook;
     public Node pawnPane;
     public Node kingPane;
     public Node bishophPane;
     public Node queenPane;
     public Node knightPane;
+    public Node rookPane;
     public ListView whiteMovesID;
     public ListView blackMovesID;
     /*private void movePawn(Node selectedPane) {
@@ -164,15 +167,14 @@ public class BoardController {
         try {
             if ((GridPane.getRowIndex(selectedPane)-1==GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)-2 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)-1 == GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+2 == GridPane.getColumnIndex(kingPane))) {
 
-                System.out.println("Der König ist kein fucking pferd du idiot");
+                System.out.println("Der König ist kein Pferd");
             }else if ((GridPane.getRowIndex(selectedPane)-2==GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)-1 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)-2 == GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+1 == GridPane.getColumnIndex(kingPane))) {
 
-                System.out.println("Der König ist kein fucking pferd du idiot");
+                System.out.println("Der König ist kein Pferd");
             }else if ((GridPane.getRowIndex(selectedPane)+1==GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+1 == GridPane.getColumnIndex(kingPane))|| (GridPane.getRowIndex(selectedPane)-1 == GridPane.getRowIndex(kingPane) && GridPane.getColumnIndex(selectedPane)-1 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)+1 == GridPane.getRowIndex(kingPane) && GridPane.getColumnIndex(selectedPane)-1 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)-1 == GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+1 == GridPane.getColumnIndex(kingPane))) {
                 whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
                 whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
                 System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-                System.out.println("Warum macht der King das");
                 GridPane.setRowIndex(kingPane, GridPane.getRowIndex(selectedPane));
                 GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(selectedPane));
             }else if ((GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(kingPane) || GridPane.getRowIndex(selectedPane) -1 == GridPane.getRowIndex(kingPane)) && (GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(kingPane)) ) {
@@ -182,16 +184,41 @@ public class BoardController {
                 System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
                 GridPane.setRowIndex(kingPane, GridPane.getRowIndex(selectedPane));
                 GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(kingPane));
-                System.out.println("Nach vorne");
             }else if (( GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(kingPane) || GridPane.getColumnIndex(selectedPane) -1 == GridPane.getColumnIndex(kingPane)) && (GridPane.getRowIndex(selectedPane) == GridPane.getRowIndex(kingPane))) {
                 whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
                 whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
                 System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
                 GridPane.setRowIndex(kingPane, GridPane.getRowIndex(kingPane));
                 GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(selectedPane));
-                System.out.println("Nach hinten");
             }else{
                 System.out.println("King can not be moved at: "+ GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving King");
+        }
+    }
+
+    private void clickedRectangleRook(Node selectedPane){
+        //Hier geht der Rook(Turm) nach vorne/hinten und links/rechts
+        //Es wird nicht implementiert, dass der Turm jemanden schmeißt
+        if (GridPane.getColumnIndex(selectedPane) == null){
+            GridPane.setColumnIndex(selectedPane, 0);
+        }else if(GridPane.getRowIndex(selectedPane) == null){
+            GridPane.setRowIndex(selectedPane, 0);
+        }else if(GridPane.getColumnIndex(rookPane) == null){
+            GridPane.setColumnIndex(rookPane, 0);
+        }else if (GridPane.getRowIndex( rookPane)== null){
+            GridPane.setRowIndex(rookPane, 0);
+        }
+        try {
+            for (int i = 0; i < 7; i++) {
+                if (GridPane.getRowIndex(selectedPane)+i==GridPane.getRowIndex(rookPane)){
+                    whiteMovesID.getItems().add(rookPane.getId() + " from: " + GridPane.getColumnIndex(rookPane) + "|" + GridPane.getRowIndex(rookPane));
+                    whiteMovesID.getItems().add(rookPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                    System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                    GridPane.setRowIndex(rookPane, GridPane.getRowIndex(selectedPane));
+                    GridPane.setColumnIndex(rookPane, GridPane.getColumnIndex(rookPane));
+                }
             }
         } catch (Exception e) {
             System.out.println("Exception was thrown at moving King");
@@ -207,6 +234,7 @@ public class BoardController {
                 clickedWhiteKnight = false;
                 clickedWhiteBishoph = false;
                 clickedWhiteQueen = false;
+                clickedWhiteRook = false;
                 pawnPane = selectedPane;
 
             } else if (selectedPane.getId().contains("black")) {
@@ -220,6 +248,8 @@ public class BoardController {
                     clickedBlackKnight(selectedPane);
                 }else if(clickedWhiteBishoph){
                     clickedBlackBishoph(selectedPane);
+                }else if(clickedWhiteRook){
+                    clickedBlackRook(selectedPane);
                 }else{
                     System.out.println("No Piece selected!");
                 }
@@ -229,6 +259,7 @@ public class BoardController {
                 clickedWhiteQueen = false;
                 clickedWhiteBishoph = false;
                 clickedWhiteKnight = false;
+                clickedWhiteRook = false;
                 kingPane = selectedPane;
             } else if (selectedPane.getId().contains("whiteQueen")){
                 clickedWhiteQueen = true;
@@ -236,6 +267,7 @@ public class BoardController {
                 clickedWhitePawn = false;
                 clickedWhiteBishoph = false;
                 clickedWhiteKnight = false;
+                clickedWhiteRook = false;
                 queenPane = selectedPane;
             } else if (selectedPane.getId().contains("whiteBishoph")){
                 clickedWhiteBishoph = true;
@@ -243,6 +275,7 @@ public class BoardController {
                 clickedWhiteKing = false;
                 clickedWhiteQueen = false;
                 clickedWhiteKnight = false;
+                clickedWhiteRook = false;
                 bishophPane = selectedPane;
             } else if (selectedPane.getId().contains("whiteKnight")){
                 clickedWhiteKnight = true;
@@ -250,7 +283,16 @@ public class BoardController {
                 clickedWhiteKing = false;
                 clickedWhiteBishoph = false;
                 clickedWhiteQueen = false;
+                clickedWhiteRook = false;
                 knightPane = selectedPane;
+            }else if (selectedPane.getId().contains("whiteRook")){
+                clickedWhiteRook = true;
+                clickedWhitePawn = false;
+                clickedWhiteKing = false;
+                clickedWhiteBishoph = false;
+                clickedWhiteQueen = false;
+                clickedWhiteKnight = false;
+                rookPane = selectedPane;
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
 
@@ -258,6 +300,8 @@ public class BoardController {
                 clickedRectanglePawn(selectedPane);
             } else if (clickedWhiteKing) {
                 clickedRectangleKing(selectedPane);
+            }else if (clickedWhiteRook) {
+                clickedRectangleRook(selectedPane);
             } else {
                 System.out.println("No Piece selected!");
             }
@@ -272,6 +316,50 @@ public class BoardController {
     }
 
     private void clickedBlackKing(Node selectedPane) {
+        if (GridPane.getColumnIndex(selectedPane) == null){
+            GridPane.setColumnIndex(selectedPane, 0);
+        }else if(GridPane.getRowIndex(selectedPane) == null){
+            GridPane.setRowIndex(selectedPane, 0);
+        }else if(GridPane.getColumnIndex(kingPane) == null){
+            GridPane.setColumnIndex(kingPane, 0);
+        }else if (GridPane.getRowIndex( kingPane)== null){
+            GridPane.setRowIndex(kingPane, 0);
+        }
+        try {
+            if ((GridPane.getRowIndex(selectedPane)-1==GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)-2 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)-1 == GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+2 == GridPane.getColumnIndex(kingPane))) {
+
+                System.out.println("Der König ist kein Pferd");
+            }else if ((GridPane.getRowIndex(selectedPane)-2==GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)-1 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)-2 == GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+1 == GridPane.getColumnIndex(kingPane))) {
+
+                System.out.println("Der König ist kein Pferd");
+            }else if ((GridPane.getRowIndex(selectedPane)+1==GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+1 == GridPane.getColumnIndex(kingPane))|| (GridPane.getRowIndex(selectedPane)-1 == GridPane.getRowIndex(kingPane) && GridPane.getColumnIndex(selectedPane)-1 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)+1 == GridPane.getRowIndex(kingPane) && GridPane.getColumnIndex(selectedPane)-1 == GridPane.getColumnIndex(kingPane))||(GridPane.getRowIndex(selectedPane)-1 == GridPane.getRowIndex(kingPane)&&GridPane.getColumnIndex(selectedPane)+1 == GridPane.getColumnIndex(kingPane))) {
+                whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
+                whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                selectedPane.setVisible(false);
+                GridPane.setRowIndex(kingPane, GridPane.getRowIndex(selectedPane));
+                GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(selectedPane));
+            }else if ((GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(kingPane) || GridPane.getRowIndex(selectedPane) -1 == GridPane.getRowIndex(kingPane)) && (GridPane.getColumnIndex(selectedPane) == GridPane.getColumnIndex(kingPane)) ) {
+
+                whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
+                whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                selectedPane.setVisible(false);
+                GridPane.setRowIndex(kingPane, GridPane.getRowIndex(selectedPane));
+                GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(kingPane));
+            }else if (( GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(kingPane) || GridPane.getColumnIndex(selectedPane) -1 == GridPane.getColumnIndex(kingPane)) && (GridPane.getRowIndex(selectedPane) == GridPane.getRowIndex(kingPane))) {
+                whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
+                whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                selectedPane.setVisible(false);
+                GridPane.setRowIndex(kingPane, GridPane.getRowIndex(kingPane));
+                GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(selectedPane));
+            }else{
+                System.out.println("King can not be moved at: "+ GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving Pawn");
+        }
     }
 
     private void clickedBlackQueen(Node selectedPane) {
@@ -290,6 +378,10 @@ public class BoardController {
         } catch (Exception e) {
             System.out.println("Exception was thrown at moving Queen");
         }
+    }
+
+    private void clickedBlackRook(Node selectedPane){
+
     }
 }
 
