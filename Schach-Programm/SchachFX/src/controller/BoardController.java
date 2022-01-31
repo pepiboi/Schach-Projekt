@@ -51,8 +51,14 @@ public class BoardController {
     public ImageView whitePawnSeven;
     public boolean clickedWhitePawn;
     public boolean clickedWhiteKing;
+    public boolean clickedWhiteQueen;
+    public boolean clickedWhiteBishoph;
+    public boolean clickedWhiteKnight;
     public Node pawnPane;
     public Node kingPane;
+    public Node bishophPane;
+    public Node queenPane;
+    public Node knightPane;
     public ListView whiteMovesID;
     public ListView blackMovesID;
     /*private void movePawn(Node selectedPane) {
@@ -154,36 +160,95 @@ public class BoardController {
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
-        //System.out.println(selectedPane.toString());
         if (selectedPane.toString().contains("ImageView")) {
             if (selectedPane.getId().contains("whitePawn")) {
-                //System.out.println("WhitePawn");
                 clickedWhitePawn = true;
                 clickedWhiteKing = false;
+                clickedWhiteKnight = false;
+                clickedWhiteBishoph = false;
+                clickedWhiteQueen = false;
                 pawnPane = selectedPane;
-            } else if (selectedPane.getId().contains("black")) {
-                if (clickedWhitePawn == true) {
-                    clickedBlackPawn(selectedPane);
-                } else if (clickedWhiteKing == true) {
 
-                } else {
+            } else if (selectedPane.getId().contains("black")) {
+                if (clickedWhitePawn) {
+                    clickedBlackPawn(selectedPane);
+                } else if (clickedWhiteKing) {
+                    clickedBlackKing(selectedPane);
+                } else if(clickedWhiteQueen){
+                    clickedBlackQueen(selectedPane);
+                }else if(clickedWhiteKnight){
+                    clickedBlackKnight(selectedPane);
+                }else if(clickedWhiteBishoph){
+                    clickedBlackBishoph(selectedPane);
+                }else{
                     System.out.println("No Piece selected!");
                 }
             } else if (selectedPane.getId().contains("whiteKing")) {
                 clickedWhiteKing = true;
                 clickedWhitePawn = false;
+                clickedWhiteQueen = false;
+                clickedWhiteBishoph = false;
+                clickedWhiteKnight = false;
                 kingPane = selectedPane;
+            } else if (selectedPane.getId().contains("whiteQueen")){
+                clickedWhiteQueen = true;
+                clickedWhiteKing = false;
+                clickedWhitePawn = false;
+                clickedWhiteBishoph = false;
+                clickedWhiteKnight = false;
+                queenPane = selectedPane;
+            } else if (selectedPane.getId().contains("whiteBishoph")){
+                clickedWhiteBishoph = true;
+                clickedWhitePawn = false;
+                clickedWhiteKing = false;
+                clickedWhiteQueen = false;
+                clickedWhiteKnight = false;
+                bishophPane = selectedPane;
+            } else if (selectedPane.getId().contains("whiteKnight")){
+                clickedWhiteKnight = true;
+                clickedWhitePawn = false;
+                clickedWhiteKing = false;
+                clickedWhiteBishoph = false;
+                clickedWhiteQueen = false;
+                knightPane = selectedPane;
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
 
-            if (clickedWhitePawn == true) {
+            if (clickedWhitePawn) {
                 clickedRectanglePawn(selectedPane);
-            } else if (clickedWhiteKing == true) {
+            } else if (clickedWhiteKing) {
                 clickedRectangleKing(selectedPane);
             } else {
                 System.out.println("No Piece selected!");
             }
 
+        }
+    }
+
+    private void clickedBlackBishoph(Node selectedPane) {
+    }
+
+    private void clickedBlackKnight(Node selectedPane) {
+    }
+
+    private void clickedBlackKing(Node selectedPane) {
+    }
+
+    private void clickedBlackQueen(Node selectedPane) {
+        try {
+            if (GridPane.getColumnIndex(queenPane) == null && GridPane.getRowIndex(selectedPane) != 7 && GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(pawnPane) && GridPane.getColumnIndex(selectedPane) - 1 == 0) {
+                if (selectedPane.toString().contains("ImageView")) {
+                    if (selectedPane.getId().contains("black")) {
+                        whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
+                        whiteMovesID.getItems().add(pawnPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                        selectedPane.setVisible(false);
+                        GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
+                        GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving Queen");
         }
     }
 }
