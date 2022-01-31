@@ -12,8 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.jcp.xml.dsig.internal.MacOutputStream;
-import sun.security.x509.IPAddressName;
 
 import java.io.IOException;
 import java.net.URL;
