@@ -50,7 +50,9 @@ public class BoardController {
     public ImageView whitePawnSix;
     public ImageView whitePawnSeven;
     public boolean clickedWhitePawn;
+    public boolean clickedWhiteKing;
     public Node pawnPane;
+    public Node kingPane;
     public ListView whiteMovesID;
     public ListView blackMovesID;
     /*private void movePawn(Node selectedPane) {
@@ -68,7 +70,7 @@ public class BoardController {
                     GridPane.setRowIndex(pawnPane, GridPane.getRowIndex(selectedPane));
                     GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(pawnPane));
                 }
-            }else if(GridPane.getRowIndex(selectedPane) == null){
+            } else if (GridPane.getRowIndex(selectedPane) == null) {
                 //Dann darf sich der Spieler eine Figur zurückholen
             }
         } catch (Exception e) {
@@ -108,7 +110,7 @@ public class BoardController {
                         GridPane.setColumnIndex(pawnPane, GridPane.getColumnIndex(selectedPane));
                     }
                 }
-            }else if (GridPane.getColumnIndex(selectedPane) == null && GridPane.getRowIndex(selectedPane) == null && (GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) - 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) == null) || GridPane.getRowIndex(selectedPane) == null) {
+            } else if (GridPane.getColumnIndex(selectedPane) == null && GridPane.getRowIndex(selectedPane) == null && (GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) - 1 == GridPane.getColumnIndex(pawnPane) || GridPane.getColumnIndex(selectedPane) == null) || GridPane.getRowIndex(selectedPane) == null) {
                 if (selectedPane.toString().contains("ImageView")) {
                     if (selectedPane.getId().contains("black")) {
                         whiteMovesID.getItems().add(pawnPane.getId() + " from: " + GridPane.getColumnIndex(pawnPane) + "|" + GridPane.getRowIndex(pawnPane));
@@ -124,6 +126,32 @@ public class BoardController {
         }
     }
 
+    private void clickedRectangleKing(Node selectedPane) {
+        try {
+            if (GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(kingPane) || GridPane.getRowIndex(selectedPane) -1 == GridPane.getRowIndex(kingPane)) {
+                whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
+                whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                GridPane.setRowIndex(kingPane, GridPane.getRowIndex(selectedPane));
+                GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(kingPane));
+            }else if ( GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(kingPane) || GridPane.getColumnIndex(selectedPane) -1 == GridPane.getColumnIndex(kingPane)){
+                whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
+                whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                GridPane.setRowIndex(kingPane, GridPane.getRowIndex(kingPane));
+                GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(selectedPane));
+            }else if ((GridPane.getRowIndex(selectedPane) + 1 == GridPane.getRowIndex(kingPane) || GridPane.getRowIndex(selectedPane) -1 == GridPane.getRowIndex(kingPane))&&(GridPane.getColumnIndex(selectedPane) + 1 == GridPane.getColumnIndex(kingPane) || GridPane.getColumnIndex(selectedPane) -1 == GridPane.getColumnIndex(kingPane))){
+                whiteMovesID.getItems().add(kingPane.getId() + " from: " + GridPane.getColumnIndex(kingPane) + "|" + GridPane.getRowIndex(kingPane));
+                whiteMovesID.getItems().add(kingPane.getId() + " to: " + GridPane.getColumnIndex(selectedPane) + "|" + GridPane.getRowIndex(selectedPane));
+                System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
+                GridPane.setRowIndex(kingPane, GridPane.getRowIndex(selectedPane));
+                GridPane.setColumnIndex(kingPane, GridPane.getColumnIndex(selectedPane));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving King");
+        }
+    }
+
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
         //System.out.println(selectedPane.toString());
@@ -131,18 +159,27 @@ public class BoardController {
             if (selectedPane.getId().contains("whitePawn")) {
                 //System.out.println("WhitePawn");
                 clickedWhitePawn = true;
+                clickedWhiteKing = false;
                 pawnPane = selectedPane;
             } else if (selectedPane.getId().contains("black")) {
                 if (clickedWhitePawn == true) {
                     clickedBlackPawn(selectedPane);
+                } else if (clickedWhiteKing == true) {
+
                 } else {
                     System.out.println("No Piece selected!");
                 }
+            } else if (selectedPane.getId().contains("whiteKing")) {
+                clickedWhiteKing = true;
+                clickedWhitePawn = false;
+                kingPane = selectedPane;
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
 
             if (clickedWhitePawn == true) {
                 clickedRectanglePawn(selectedPane);
+            } else if (clickedWhiteKing == true) {
+                clickedRectangleKing(selectedPane);
             } else {
                 System.out.println("No Piece selected!");
             }
