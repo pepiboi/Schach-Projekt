@@ -13,7 +13,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public class BoardController {
     public GridPane boardId;
-    public ImageView onClickExit;
     public ColumnConstraints ABoardID;
     public ColumnConstraints BBoardID;
     public ColumnConstraints CBoardID;
@@ -286,5 +285,7 @@ public class BoardController {
             System.out.println("Exception was thrown at moving Queen");
         }
     }
+
+
 }
 

@@ -1,4 +1,4 @@
-package classes;
+package FunctionalClasses;
 
 import java.io.BufferedReader;
 import java.io.IOException;
