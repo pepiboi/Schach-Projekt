@@ -21,7 +21,7 @@ public class Main extends Application {
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        System.out.println("Bitte als erstes den Server starten und danach die IP eingeben!");
     }
 
 

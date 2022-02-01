@@ -25,9 +25,10 @@ public class Client {
             streamToServer = new PrintStream(toServer.getOutputStream());
             System.out.println("Enter Connection Name");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            name = reader.readLine();
+            //name = reader.readLine();
             //BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
-            //name = toServer.getRemoteSocketAddress().toString();
+            name = toServer.getRemoteSocketAddress().toString();
+            //name = LoginController.ipAddressID.toString();
             streamToServer.println(name);
             String str = streamFromServer.readLine();
             System.out.println("The Server Says "+str);
