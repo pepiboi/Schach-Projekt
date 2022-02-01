@@ -2,6 +2,10 @@ package controller;
 
 import FunctionalClasses.Client;
 import FunctionalClasses.Main;
+import FunctionalClasses.MyServerThread;
+import FunctionalClasses.Server;
+import FunctionalClasses.Client;
+import FunctionalClasses.Main;
 import FunctionalClasses.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -52,19 +56,41 @@ public class LoginController implements Initializable {
     }
 
     public void onEnterIP(MouseEvent mouseEvent) {
-        ipClient = ipAddressID.getText();
-        if (ipClient.equals("null") || ipClient.equals("") || ipClient.isEmpty()) {
-            System.out.println("IP-Address wurde nicht eingegeben");
-            ipClient = "localhost";
-            System.out.println("IP wurde auf localhost gesetzt");
+        try {
+            if (ipAddressID == null || ipAddressID.equals("null")) {
+                System.out.println("IP darf nicht null sein");
+            }
+            ipClient = ipAddressID.getText();
+            if (ipClient.equals("null") || ipClient.equals("") || ipClient.isEmpty()) {
+                System.out.println("IP-Address wurde nicht eingegeben");
+                ipClient = "localhost";
+                System.out.println("IP wurde auf localhost gesetzt");
+            }
+
+            new Client();
+        }catch (NullPointerException npe) {
+            System.out.println("Nullpointer at IP-Eingabe");
         }
 
-        new Client();
+        try {
+            /*FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
+            stage.setResizable(false);
+            stage.setTitle("Board");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("open View did not work");
+        }
 
     }
 
     public void onStartServer(MouseEvent mouseEvent) {
-        Server server = new Server();
-        server.connect();
+        MyServerThread mst = new MyServerThread();
+        Thread t = new Thread(mst);
+        t.start();
     }
 }

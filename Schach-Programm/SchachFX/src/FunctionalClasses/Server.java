@@ -28,12 +28,19 @@ public class Server{
         try{
             while(true)
             {
+                System.out.println("Server has been created");
                 clientSocket = serverSocket.accept();
+                System.out.println("After");
                 /*count++;
                 System.out.println("Client connection number "+count);*/
+                System.out.println("accepted");
                 streamFromClient = new BufferedReader(new InputStreamReader((clientSocket.getInputStream())));
+                System.out.println("Reader");
                 streamToClient = new PrintStream(clientSocket.getOutputStream());
+                System.out.println("Writer");
                 String str = streamFromClient.readLine();
+                System.out.println("Reader from client");
+
                 System.out.println("Client connection name "+str);
                 streamToClient.println("Welcome "+str);
             }
@@ -53,7 +60,7 @@ public class Server{
     }
 
     public static void main(String[] args) {
-        Server server = new Server();
-        server.connect();
+        /*Server server = new Server();
+        server.connect();*/
     }
 }
