@@ -1,4 +1,4 @@
-package classes;
+package FunctionalClasses;
 
 public class MyServerThread implements Runnable{
     @Override

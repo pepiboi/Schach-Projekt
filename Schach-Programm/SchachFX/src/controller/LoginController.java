@@ -1,9 +1,12 @@
 package controller;
 
-import classes.Client;
-import classes.Main;
-import classes.MyServerThread;
-import classes.Server;
+import FunctionalClasses.Client;
+import FunctionalClasses.Main;
+import FunctionalClasses.MyServerThread;
+import FunctionalClasses.Server;
+import FunctionalClasses.Client;
+import FunctionalClasses.Main;
+import FunctionalClasses.Server;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
