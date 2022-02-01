@@ -43,7 +43,6 @@ public class Piece{
                 System.out.println("Bruh");
                 break;
         }
-        return board;
     }
 
     public int getPosX() {
@@ -79,7 +78,7 @@ public class Piece{
     }
 
     private static void moveRook(int x, int y){
-
+        y
     }
 
     private static void moveQueen(int x, int y){
