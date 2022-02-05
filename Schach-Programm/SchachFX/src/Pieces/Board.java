@@ -54,7 +54,6 @@ public class Board {
             if ((GridPane.getRowIndex(destination)-1==GridPane.getRowIndex(chesspiece)&&GridPane.getColumnIndex(destination)-2 == GridPane.getColumnIndex(chesspiece))||(GridPane.getRowIndex(destination)-1 == GridPane.getRowIndex(chesspiece)&&GridPane.getColumnIndex(destination)+2 == GridPane.getColumnIndex(chesspiece))) {
                 System.out.println("Der König ist kein Pferd");
             }else if ((GridPane.getRowIndex(destination)-2==GridPane.getRowIndex(chesspiece)&&GridPane.getColumnIndex(destination)-1 == GridPane.getColumnIndex(chesspiece))||(GridPane.getRowIndex(destination)-2 == GridPane.getRowIndex(chesspiece)&&GridPane.getColumnIndex(destination)+1 == GridPane.getColumnIndex(chesspiece))) {
-
                 System.out.println("Der König ist kein Pferd");
             }else if ((GridPane.getRowIndex(destination)+1==GridPane.getRowIndex(chesspiece)&&GridPane.getColumnIndex(destination)+1 == GridPane.getColumnIndex(chesspiece))|| (GridPane.getRowIndex(destination)-1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination)-1 == GridPane.getColumnIndex(chesspiece))||(GridPane.getRowIndex(destination)+1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination)-1 == GridPane.getColumnIndex(chesspiece))||(GridPane.getRowIndex(destination)-1 == GridPane.getRowIndex(chesspiece)&&GridPane.getColumnIndex(destination)+1 == GridPane.getColumnIndex(chesspiece))) {
                 /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
@@ -115,11 +114,50 @@ public class Board {
     }
 
     public void moveBishoph(Node chesspiece, Node destination){
+        if (GridPane.getColumnIndex(destination) == null){
+            GridPane.setColumnIndex(destination, 0);
+        }else if(GridPane.getRowIndex(destination) == null){
+            GridPane.setRowIndex(destination, 0);
+        }else if(GridPane.getColumnIndex(chesspiece) == null){
+            GridPane.setColumnIndex(chesspiece, 0);
+        }else if (GridPane.getRowIndex(chesspiece)== null){
+            GridPane.setRowIndex(chesspiece, 0);
+        }
 
+        boolean found = false;
+        boolean obsticle = false;
+
+        int j = 0;
+
+        try {
+                for (int i = 0; i < 4; i++) {
+                    switch(i){
+                        case 1:
+                            while(!obsticle){
+                                try{
+
+                                }catch(Exception e){
+                                    obsticle = true;
+                                    System.out.println("yall are trying out of bounds shit.");
+                                }
+                            }
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                    }
+                    obsticle = false;
+                }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving Bishoph");
+        }
     }
 
     public void moveKnight(Node chesspiece, Node destination){
-
+        
     }
     
     public void killPawn(Node chesspiece, Node p){
