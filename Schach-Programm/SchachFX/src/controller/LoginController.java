@@ -8,6 +8,7 @@ import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
 import Pieces.ChessColor;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,10 +28,15 @@ public class LoginController implements Initializable {
     public Button boardButton;
     public TextField ipAddressID;
     public static String ipClient;
-    Stage stage;
+    public static Stage serverStage;
+    public static Stage clientStage;
+    int boardCount;
+    public static boolean clientConnected = false;
 
     public LoginController(Stage primaryStage) {
-        this.stage = primaryStage;
+        this.serverStage = primaryStage;
+        this.clientStage = primaryStage;
+        boardCount = 0;
     }
 
     @Override
@@ -45,13 +51,19 @@ public class LoginController implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
-            fxmlLoader.setControllerFactory(callback -> new BoardController(ChessColor.WHITE));
             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
-            stage.setResizable(false);
+            clientStage.setResizable(false);
+            clientStage.setTitle("Board");
+            clientStage.setScene(scene);
+            clientStage.show();
+
+
+            /*stage.setResizable(false);
             stage.setTitle("Board");
             stage.setScene(scene);
-            stage.show();
+            stage.show();*/
         } catch (IOException e) {
+            System.out.println("open View did not work");
             e.printStackTrace();
         }
 
@@ -69,24 +81,34 @@ public class LoginController implements Initializable {
                 System.out.println("IP wurde auf localhost gesetzt");
             }
 
-            new Client();
-        }catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             System.out.println("Nullpointer at IP-Eingabe");
         }
 
+        /*FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
+        System.out.println("Before Client");
+        Client client = new Client();
+        System.out.println("After Client");
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
+        Scene scene = null;
         try {
-            /*FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
-            stage.setResizable(false);
-            stage.setTitle("Board");
-            stage.setScene(scene);
-            stage.show();
+            scene = new Scene(fxmlLoader.load(), 1177, 1007);
         } catch (IOException e) {
-            System.out.println("open View did not work");
+            e.printStackTrace();
         }
+        clientStage.setResizable(false);
+        clientStage.setTitle("ClientBoard");
+        clientStage.setScene(scene);
+        clientStage.show();
+        clientConnected = true;
+
+        System.out.println("Before clientHasOpenedBoardView");
+        client.clientHasOpenedBoardView(clientConnected);
+        System.out.println("After clientHasOpenedBoardView");
+
 
     }
 
@@ -94,5 +116,18 @@ public class LoginController implements Initializable {
         MyServerThread mst = new MyServerThread();
         Thread t = new Thread(mst);
         t.start();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("waitingLoungeView.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 650, 650);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        serverStage.setResizable(false);
+        serverStage.setTitle("WaitingLounge");
+        serverStage.setScene(scene);
+        serverStage.show();
+        boardCount++;
     }
 }

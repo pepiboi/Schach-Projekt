@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #383838;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WaitingLounge">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="70.0" layoutX="89.0" stroke="WHITE" strokeType="INSIDE" width="423.0" />
+      <Text layoutX="188.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting-Lounge" wrappingWidth="266.453125">
+         <font>
+            <Font name="Arial" size="33.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/8-85982_thunder-black-and-white.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="26.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client 1" wrappingWidth="174.13671875">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
+      <Text layoutX="413.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client 2">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Text>
+      <Text layoutX="96.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="warte bis sich der 2. Client verbunden hat!" wrappingWidth="395.13671875">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

@@ -1,5 +1,6 @@
 package controller;
 
+import FunctionalClasses.Client;
 import Pieces.Board;
 import Pieces.ChessColor;
 import javafx.fxml.Initializable;
@@ -69,13 +70,10 @@ public class BoardController implements Initializable {
     public Node rookPane;
     public static ListView<String> whiteMovesID;
     public static ListView<String> blackMovesID;
-    public ChessColor cc;
+    public ChessColor cc = ChessColor.WHITE;
     public GridPane boardId;
     public Pieces.Board GameBoard;
 
-    public BoardController(ChessColor cc){
-        this.cc = cc;
-    }
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
@@ -148,16 +146,58 @@ public class BoardController implements Initializable {
         } else if (selectedPane.toString().contains("Rectangle")) {
             if (clickedWhitePawn) {
                 GameBoard.movePawn(pawnPane,selectedPane);
+                if (LoginController.clientConnected == true){
+                    if (LoginController.clientConnected == true){
+                        Client.sendCurrentPosition("pawnPane");
+                    }else {
+                        Client.sendCurrentPosition("pawnPane");
+                    }
+                }
             } else if (clickedWhiteKing) {
                 GameBoard.moveKing(kingPane,selectedPane);
+                if (LoginController.clientConnected == true){
+                    if (LoginController.clientConnected == true){
+                        Client.sendCurrentPosition("kingPane");
+                    }else {
+                        Client.sendCurrentPosition("kingPane");
+                    }
+                }
             }else if (clickedWhiteRook) {
                 GameBoard.moveRook(rookPane,selectedPane);
+                if (LoginController.clientConnected == true){
+                    if (LoginController.clientConnected == true){
+                        Client.sendCurrentPosition("rookPane");
+                    }else {
+                        Client.sendCurrentPosition("rookPane");
+                    }
+                }
             }else if (clickedWhiteQueen) {
                 GameBoard.moveQueen(queenPane,selectedPane);
+                if (LoginController.clientConnected == true){
+                    if (LoginController.clientConnected == true){
+                        Client.sendCurrentPosition("queenPane");
+                    }else {
+                        Client.sendCurrentPosition("queenPane");
+                    }
+                }
             }else if (clickedWhiteBishoph) {
                 GameBoard.moveBishoph(bishophPane,selectedPane);
+                if (LoginController.clientConnected == true){
+                    if (LoginController.clientConnected == true){
+                        Client.sendCurrentPosition("bishophPane");
+                    }else {
+                        Client.sendCurrentPosition("bishophPane");
+                    }
+                }
             }else if (clickedWhiteKnight) {
                 GameBoard.moveKnight(knightPane,selectedPane);
+                if (LoginController.clientConnected == true){
+                    if (LoginController.clientConnected == true){
+                        Client.sendCurrentPosition("knightPane");
+                    }else {
+                        Client.sendCurrentPosition("knightPane");
+                    }
+                }
             } else {
                 System.out.println("No Piece selected!");
             }
