@@ -28,7 +28,13 @@ public class Board {
         for (Node node : gp.getChildren()) {
             if(node.toString().contains("ImageView")){
                 try {
-                    board[GridPane.getColumnIndex(node)][GridPane.getRowIndex(node)] = node;
+                    if(GridPane.getColumnIndex(node) == null){
+                        board[0][GridPane.getRowIndex(node)] = node;
+                    }else if(GridPane.getRowIndex(node) == null){
+                        board[GridPane.getColumnIndex(node)][0] = node;
+                    }else {
+                        board[GridPane.getColumnIndex(node)][GridPane.getRowIndex(node)] = node;
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -63,10 +69,11 @@ public class Board {
                 if (GridPane.getColumnIndex(chesspiece) > GridPane.getColumnIndex(destination)) {
                     //links
                     for (int i = GridPane.getColumnIndex(chesspiece) - 1; i >= GridPane.getColumnIndex(destination); i--) {
-                        GridPane.setColumnIndex(destiPlusI, i);
-                        if (destiPlusI.toString().contains("white")) {
-                            whiteInfront = true;
-                        }
+//                        if (chessboard[GridPane.getColumnIndex()][]) {
+//                            if(GridPane.getColumnIndex(destination) == GridPane.getColumnIndex(chesspiece) - i){
+//                                GridPane.setRowIndex(chesspiece,i);
+//                            }
+//                        }
                     }
                     if (whiteInfront) {
                         System.out.println("White Piecec can not be overtaken with Rook");
@@ -243,18 +250,26 @@ public class Board {
                 if (!upLeft) {
                     GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                     GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                    chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                    chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 }
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 break;
             } else if ((GridPane.getColumnIndex(chesspiece) - j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 break;
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 break;
             }
             j++;
@@ -263,7 +278,6 @@ public class Board {
                 break;
             }
         } while (true);
-        upLeft = false;
         j = 1;
     }
 
