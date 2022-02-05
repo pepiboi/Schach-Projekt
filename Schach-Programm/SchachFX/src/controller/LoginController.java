@@ -7,6 +7,7 @@ import FunctionalClasses.Server;
 import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
+import Pieces.ChessColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
