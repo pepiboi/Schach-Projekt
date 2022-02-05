@@ -7,6 +7,7 @@ import FunctionalClasses.Server;
 import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
+import Pieces.ChessColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,14 +44,15 @@ public class LoginController implements Initializable {
             /*FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
+            fxmlLoader.setControllerFactory(callback -> new BoardController(ChessColor.WHITE));
             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
             stage.setResizable(false);
             stage.setTitle("Board");
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            System.out.println("open View did not work");
+            e.printStackTrace();
         }
 
     }

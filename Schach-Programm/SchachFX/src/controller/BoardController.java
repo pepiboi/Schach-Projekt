@@ -2,6 +2,7 @@ package controller;
 
 import Pieces.Board;
 import Pieces.ChessColor;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -15,8 +16,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class BoardController {
+public class BoardController implements Initializable {
     public ColumnConstraints ABoardID;
     public ColumnConstraints BBoardID;
     public ColumnConstraints CBoardID;
@@ -64,11 +67,15 @@ public class BoardController {
     public Node queenPane;
     public Node knightPane;
     public Node rookPane;
-    public static ListView whiteMovesID;
-    public static ListView blackMovesID;
+    public static ListView<String> whiteMovesID;
+    public static ListView<String> blackMovesID;
     public ChessColor cc;
-    public GridPane boardId = new GridPane();
-    public Pieces.Board GameBoard = new Board(boardId,cc);
+    public GridPane boardId;
+    public Pieces.Board GameBoard;
+
+    public BoardController(ChessColor cc){
+        this.cc = cc;
+    }
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
@@ -156,6 +163,11 @@ public class BoardController {
             }
 
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        GameBoard = new Board(boardId,cc);
     }
 }
 
