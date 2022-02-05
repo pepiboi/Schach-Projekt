@@ -1,17 +1,16 @@
-package classes;
+package FunctionalClasses;
 
 import controller.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("loginView.fxml"));
         fxmlLoader.setControllerFactory(call -> new LoginController(primaryStage));
         Scene scene = new Scene(fxmlLoader.load(), 600, 600);
@@ -20,6 +19,7 @@ public class Main extends Application {
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
+        System.out.println("Bitte als erstes den Server starten und danach die IP eingeben!");
     }
 
 

@@ -1,4 +1,4 @@
-package classes;
+package FunctionalClasses;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,11 +8,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server{
-    ServerSocket serverSocket;
-    PrintStream streamToClient;
-    BufferedReader streamFromClient;
-    Socket clientSocket;
-    static int count = 0;
+     ServerSocket serverSocket;
+     PrintStream streamToClient;
+     BufferedReader streamFromClient;
+     Socket clientSocket;
+     int count = 0;
 
     public Server() {
         try{
@@ -28,12 +28,19 @@ public class Server{
         try{
             while(true)
             {
+                System.out.println("Server has been created");
                 clientSocket = serverSocket.accept();
+                System.out.println("After");
                 /*count++;
                 System.out.println("Client connection number "+count);*/
+                System.out.println("accepted");
                 streamFromClient = new BufferedReader(new InputStreamReader((clientSocket.getInputStream())));
+                System.out.println("Reader");
                 streamToClient = new PrintStream(clientSocket.getOutputStream());
+                System.out.println("Writer");
                 String str = streamFromClient.readLine();
+                System.out.println("Reader from client");
+
                 System.out.println("Client connection name "+str);
                 streamToClient.println("Welcome "+str);
             }
@@ -53,7 +60,7 @@ public class Server{
     }
 
     public static void main(String[] args) {
-        Server server = new Server();
-        server.connect();
+        /*Server server = new Server();
+        server.connect();*/
     }
 }
