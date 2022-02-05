@@ -8,6 +8,7 @@ import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
 import Pieces.ChessColor;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -80,7 +81,7 @@ public class LoginController implements Initializable {
                 System.out.println("IP wurde auf localhost gesetzt");
             }
 
-        }catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             System.out.println("Nullpointer at IP-Eingabe");
         }
 
@@ -88,23 +89,24 @@ public class LoginController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
         System.out.println("Before Client");
-            Client client = new Client();
+        Client client = new Client();
         System.out.println("After Client");
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 1177, 1007);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1177, 1007);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         clientStage.setResizable(false);
         clientStage.setTitle("ClientBoard");
         clientStage.setScene(scene);
         clientStage.show();
-            clientConnected = true;
+        clientConnected = true;
+
         System.out.println("Before clientHasOpenedBoardView");
-            client.clientHasOpenedBoardView(clientConnected);
+        client.clientHasOpenedBoardView(clientConnected);
         System.out.println("After clientHasOpenedBoardView");
             
 
