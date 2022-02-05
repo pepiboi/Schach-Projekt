@@ -53,11 +53,18 @@ public class Board {
         Node destiPlusI = chesspiece;
         boolean whiteInfront = false;
         try {
-            if ((GridPane.getRowIndex(chesspiece) == GridPane.getRowIndex(destination))) {
+            if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
+                System.out.println("Der Turm ist kein Pferd");
+            } else if ((GridPane.getRowIndex(chesspiece) != GridPane.getRowIndex(destination)) && (GridPane.getColumnIndex(chesspiece) != GridPane.getColumnIndex(destination))) {
+                System.out.println("Rook can not move to: " + GridPane.getRowIndex(destination) + " | " + GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
+
+                System.out.println("Der Turm ist kein Pferd");
+            } else if ((GridPane.getRowIndex(chesspiece) == GridPane.getRowIndex(destination))) {
                 System.out.println("Reihe");
                 if (GridPane.getColumnIndex(chesspiece) > GridPane.getColumnIndex(destination)) {
                     //- rechnen um nach oben zu gehen
-                    for (int i = GridPane.getColumnIndex(chesspiece); i >= GridPane.getColumnIndex(destination); i--) {
+                    for (int i = GridPane.getColumnIndex(chesspiece)-1; i >= GridPane.getColumnIndex(destination); i--) {
                         GridPane.setColumnIndex(destiPlusI, i);
                         if (destiPlusI.toString().contains("white")) {
                             whiteInfront = true;
@@ -67,11 +74,10 @@ public class Board {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(chesspiece));
-                        GridPane.setColumnIndex(destination, GridPane.getColumnIndex(destination));
+                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                     }
                 } else {
-                    for (int i = GridPane.getColumnIndex(chesspiece); i <= GridPane.getColumnIndex(destination); i++) {
+                    for (int i = GridPane.getColumnIndex(chesspiece)+1; i <= GridPane.getColumnIndex(destination); i++) {
                         GridPane.setColumnIndex(destiPlusI, i);
                         if (destiPlusI.toString().contains("white")) {
                             whiteInfront = true;
@@ -81,13 +87,13 @@ public class Board {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setColumnIndex(destination, GridPane.getColumnIndex(destination));
+                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                     }
                 }
             } else if (GridPane.getColumnIndex(chesspiece) == GridPane.getColumnIndex(chesspiece)) {
                 if (GridPane.getRowIndex(chesspiece) > GridPane.getRowIndex(destination)) {
                     //- rechnen um nach oben zu gehen
-                    for (int i = GridPane.getRowIndex(chesspiece); i >= GridPane.getRowIndex(destination); i--) {
+                    for (int i = GridPane.getRowIndex(chesspiece)-1; i >= GridPane.getRowIndex(destination); i--) {
                         GridPane.setRowIndex(destiPlusI, i);
                         if (destiPlusI.toString().contains("white")) {
                             whiteInfront = true;
@@ -97,10 +103,10 @@ public class Board {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setRowIndex(destination, GridPane.getRowIndex(destination));
+                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                     }
                 } else {
-                    for (int i = GridPane.getRowIndex(chesspiece); i <= GridPane.getRowIndex(destination); i++) {
+                    for (int i = GridPane.getRowIndex(chesspiece)+1; i <= GridPane.getRowIndex(destination); i++) {
                         GridPane.setRowIndex(destiPlusI, i);
                         if (destiPlusI.toString().contains("white")) {
                             whiteInfront = true;
@@ -110,7 +116,7 @@ public class Board {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setRowIndex(destination, GridPane.getRowIndex(destination));
+                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                     }
                 }
             } else {
@@ -163,25 +169,35 @@ public class Board {
         }
     }
 
-    public void movePawn(Node chesspiece, Node destination){
-        if (GridPane.getColumnIndex(destination) == null){
+    public void movePawn(Node chesspiece, Node destination) {
+        if (GridPane.getColumnIndex(destination) == null) {
             GridPane.setColumnIndex(destination, 0);
-        }else if(GridPane.getRowIndex(destination) == null){
+        } else if (GridPane.getRowIndex(destination) == null) {
             GridPane.setRowIndex(destination, 0);
-        }else if(GridPane.getColumnIndex(chesspiece) == null){
+        } else if (GridPane.getColumnIndex(chesspiece) == null) {
             GridPane.setColumnIndex(chesspiece, 0);
-        }else if (GridPane.getRowIndex( chesspiece)== null){
+        } else if (GridPane.getRowIndex(chesspiece) == null) {
             GridPane.setRowIndex(chesspiece, 0);
         }
-
+        Node destUeberspringen = destination;
         try {
             if (GridPane.getColumnIndex(destination) == GridPane.getColumnIndex(chesspiece)) {
                 if (GridPane.getRowIndex(destination) + 2 == 6 || GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece)) {
-                    /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
-                    whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
-                    System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                    GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    /*BoardController.whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
+                    BoardController.whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
+
+                    if (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece)) {
+                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
+                    } else if ((GridPane.getRowIndex(destination) + 2 == 6)) {
+
+                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
+
+                    }
+
                 }
             } else if (GridPane.getRowIndex(destination) == null) {
                 //Dann darf sich der Spieler eine Figur zurückholen
@@ -195,14 +211,14 @@ public class Board {
 
     }
 
-    public void moveBishoph(Node chesspiece, Node destination){
-        if (GridPane.getColumnIndex(destination) == null){
+    public void moveBishoph(Node chesspiece, Node destination) {
+        if (GridPane.getColumnIndex(destination) == null) {
             GridPane.setColumnIndex(destination, 0);
-        }else if(GridPane.getRowIndex(destination) == null){
+        } else if (GridPane.getRowIndex(destination) == null) {
             GridPane.setRowIndex(destination, 0);
-        }else if(GridPane.getColumnIndex(chesspiece) == null){
+        } else if (GridPane.getColumnIndex(chesspiece) == null) {
             GridPane.setColumnIndex(chesspiece, 0);
-        }else if (GridPane.getRowIndex(chesspiece)== null){
+        } else if (GridPane.getRowIndex(chesspiece) == null) {
             GridPane.setRowIndex(chesspiece, 0);
         }
 
@@ -239,7 +255,38 @@ public class Board {
         j = 1;
     }
 
-    public void moveKnight(Node chesspiece, Node destination){
+    public void moveKnight(Node chesspiece, Node destination) {
+        if (GridPane.getColumnIndex(destination) == null) {
+            GridPane.setColumnIndex(destination, 0);
+        } else if (GridPane.getRowIndex(destination) == null) {
+            GridPane.setRowIndex(destination, 0);
+        } else if (GridPane.getColumnIndex(chesspiece) == null) {
+            GridPane.setColumnIndex(chesspiece, 0);
+        } else if (GridPane.getRowIndex(chesspiece) == null) {
+            GridPane.setRowIndex(chesspiece, 0);
+        }
+
+        try {
+            if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece))) {
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece))) {
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            }
+        } catch (Exception e) {
+            System.out.println("Movin Knight exception");
+        }
 
     }
 
@@ -304,12 +351,164 @@ public class Board {
 
     }
 
-    public void killRook(Node chesspiece, Node p) {
+    public void killRook(Node chesspiece, Node destination) {
+        if (GridPane.getColumnIndex(destination) == null) {
+            GridPane.setColumnIndex(destination, 0);
+        } else if (GridPane.getRowIndex(destination) == null) {
+            GridPane.setRowIndex(destination, 0);
+        } else if (GridPane.getColumnIndex(chesspiece) == null) {
+            GridPane.setColumnIndex(chesspiece, 0);
+        } else if (GridPane.getRowIndex(chesspiece) == null) {
+            GridPane.setRowIndex(chesspiece, 0);
+        }
+        Node destiPlusI = chesspiece;
+        boolean whiteInfront = false;
+        try {
+            if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
+                System.out.println("Der Turm ist kein Pferd");
+            } else if ((GridPane.getRowIndex(chesspiece) != GridPane.getRowIndex(destination)) && (GridPane.getColumnIndex(chesspiece) != GridPane.getColumnIndex(destination))) {
+                System.out.println("Rook can not move to: " + GridPane.getRowIndex(destination) + " | " + GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
 
+                System.out.println("Der Turm ist kein Pferd");
+            } else if ((GridPane.getRowIndex(chesspiece) == GridPane.getRowIndex(destination))) {
+                System.out.println("Reihe");
+                if (GridPane.getColumnIndex(chesspiece) > GridPane.getColumnIndex(destination)) {
+                    //- rechnen um nach oben zu gehen
+                    for (int i = GridPane.getColumnIndex(chesspiece)-1; i >= GridPane.getColumnIndex(destination); i--) {
+                        GridPane.setColumnIndex(destiPlusI, i);
+                        if (destiPlusI.toString().contains("ImageView")) {
+                            whiteInfront = true;
+                        }
+                    }
+                    if (whiteInfront == true) {
+                        System.out.println("White Piecec can not be overtaken with Rook");
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+                    } else {
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    }
+                } else {
+                    for (int i = GridPane.getColumnIndex(chesspiece)+1; i <= GridPane.getColumnIndex(destination); i++) {
+                        GridPane.setColumnIndex(destiPlusI, i);
+                        if (destiPlusI.toString().contains("ImageView")) {
+                            whiteInfront = true;
+                        }
+                    }
+
+
+                    if (whiteInfront == true) {
+                        System.out.println("White Piecec can not be overtaken with Rook");
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+
+                    } else {
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+
+                        }
+                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    }
+                }
+            } else if (GridPane.getColumnIndex(chesspiece) == GridPane.getColumnIndex(chesspiece)) {
+                if (GridPane.getRowIndex(chesspiece) > GridPane.getRowIndex(destination)) {
+                    //- rechnen um nach oben zu gehen
+                    for (int i = GridPane.getRowIndex(chesspiece)-1; i >= GridPane.getRowIndex(destination); i--) {
+                        GridPane.setRowIndex(destiPlusI, i);
+                        if (destiPlusI.toString().contains("ImageView")) {
+                            whiteInfront = true;
+                        }
+                    }
+                    if (whiteInfront == true) {
+                        System.out.println("White Piece can not be overtaken with Rook");
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+                    } else {
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                    }
+                } else {
+                    for (int i = GridPane.getRowIndex(chesspiece)+1; i <= GridPane.getRowIndex(destination); i++) {
+                        GridPane.setRowIndex(destiPlusI, i);
+                        if (destiPlusI.toString().contains("ImageView")) {
+                            whiteInfront = true;
+                        }
+                    }
+                    if (whiteInfront == true) {
+                        System.out.println("White Piecec can not be overtaken with Rook");
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+                    } else {
+                        if (destination.toString().contains("black")){
+                            destination.setVisible(false);
+                        }
+                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                    }
+                }
+            } else {
+                System.out.println("Rook can not move to: " + GridPane.getRowIndex(destination) + " | " + GridPane.getColumnIndex(destination));
+            }
+        } catch (Exception e) {
+            System.out.println("Exception was thrown at moving Rook");
+        }
     }
 
-    public void killKnight(Node chesspiece, Node p) {
-
+    public void killKnight(Node chesspiece, Node destination) {
+        if (GridPane.getColumnIndex(destination) == null) {
+            GridPane.setColumnIndex(destination, 0);
+        } else if (GridPane.getRowIndex(destination) == null) {
+            GridPane.setRowIndex(destination, 0);
+        } else if (GridPane.getColumnIndex(chesspiece) == null) {
+            GridPane.setColumnIndex(chesspiece, 0);
+        } else if (GridPane.getRowIndex(chesspiece) == null) {
+            GridPane.setRowIndex(chesspiece, 0);
+        }
+        try {
+            if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
+                if (destination.toString().contains("black")) {
+                    destination.setVisible(false);
+                }
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
+                if (destination.toString().contains("black")) {
+                    destination.setVisible(false);
+                }
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece))) {
+                if (destination.toString().contains("black")) {
+                    destination.setVisible(false);
+                }
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            } else if ((GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece))) {
+                if (destination.toString().contains("black")) {
+                    destination.setVisible(false);
+                }
+                System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+            }
+        } catch (Exception e) {
+            System.out.println("Killing with Knight exception");
+        }
     }
 
     public void killBishoph(Node chesspiece, Node p) {
