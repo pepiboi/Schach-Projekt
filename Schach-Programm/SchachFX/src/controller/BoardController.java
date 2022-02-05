@@ -70,13 +70,10 @@ public class BoardController implements Initializable {
     public Node rookPane;
     public static ListView<String> whiteMovesID;
     public static ListView<String> blackMovesID;
-    public ChessColor cc;
+    public ChessColor cc = ChessColor.WHITE;
     public GridPane boardId;
     public Pieces.Board GameBoard;
 
-    public BoardController(ChessColor cc){
-        this.cc = cc;
-    }
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
