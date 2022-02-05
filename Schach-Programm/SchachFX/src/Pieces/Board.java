@@ -3,15 +3,40 @@ package Pieces;
 import controller.BoardController;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
+
+import javax.swing.text.html.ImageView;
+
+import java.awt.*;
 
 import static controller.BoardController.whiteMovesID;
 
-public class Board {
-    GridPane gp = new GridPane();
 
-    public Board(GridPane gp) {
+public class Board {
+    GridPane gp;
+    ChessColor cc;
+//    Node[][] chessboard = generateBoard();
+
+    public Board(GridPane gp, ChessColor cc) {
         this.gp = gp;
+        this.cc = cc;
     }
+
+//    public Node[][] generateBoard(){
+//        int i = 0;
+//        int j = 0;
+//        Node[][] board = new Node[7][7];
+//        assert gp != null;
+//        for (Node node : gp.getChildren()) {
+//            board[j][i] = node;
+//            if(i == 7){
+//                j++;
+//                i = 0;
+//            }
+//            i++;
+//        }
+//        return board;
+//    }
 
     public void moveRook(Node chesspiece, Node destination) {
         //Hier geht der Rook(Turm) nach vorne/hinten und links/rechts
@@ -38,7 +63,7 @@ public class Board {
                             whiteInfront = true;
                         }
                     }
-                    if (whiteInfront == true) {
+                    if (whiteInfront) {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
@@ -52,7 +77,7 @@ public class Board {
                             whiteInfront = true;
                         }
                     }
-                    if (whiteInfront == true) {
+                    if (whiteInfront) {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
@@ -68,7 +93,7 @@ public class Board {
                             whiteInfront = true;
                         }
                     }
-                    if (whiteInfront == true) {
+                    if (whiteInfront) {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
@@ -81,7 +106,7 @@ public class Board {
                             whiteInfront = true;
                         }
                     }
-                    if (whiteInfront == true) {
+                    if (whiteInfront) {
                         System.out.println("White Piecec can not be overtaken with Rook");
                     } else {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
@@ -156,7 +181,7 @@ public class Board {
                     whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
                     System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                     GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
+                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 }
             } else if (GridPane.getRowIndex(destination) == null) {
                 //Dann darf sich der Spieler eine Figur zurückholen
@@ -181,36 +206,37 @@ public class Board {
             GridPane.setRowIndex(chesspiece, 0);
         }
 
-        boolean found = false;
-        boolean obsticle = false;
+        int j = 1;
 
-        int j = 0;
+        int x;
+        int y;
 
-        try {
-                for (int i = 0; i < 4; i++) {
-                    switch(i){
-                        case 1:
-                            while(!obsticle){
-                                try{
+         do {
 
-                                }catch(Exception e){
-                                    obsticle = true;
-                                    System.out.println("yall are trying out of bounds shit.");
-                                }
-                            }
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                    }
-                    obsticle = false;
-                }
-        } catch (Exception e) {
-            System.out.println("Exception was thrown at moving Bishoph");
-        }
+            if ((GridPane.getColumnIndex(chesspiece) - j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
+                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                break;
+            }else if((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))){
+                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                break;
+            }else if((GridPane.getColumnIndex(chesspiece) - j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))){
+                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                break;
+            }else if((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))){
+                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                    GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                break;
+            }
+            j++;
+            if(j > 8){
+                System.out.println("bruh versuch a feld wo er hin kumma ko");
+                break;
+            }
+        }while(true);
+        j = 1;
     }
 
     public void moveKnight(Node chesspiece, Node destination){
@@ -333,6 +359,14 @@ public class Board {
             }
         } catch (Exception e) {
             System.out.println("Exception was thrown at moving Pawn");
+        }
+    }
+
+    public String getOpposite(){
+        if(cc.toString().equals("WHITE")){
+            return "black";
+        }else {
+            return "white";
         }
     }
 }

@@ -167,7 +167,7 @@
                <image>
                   <Image url="@../images/whiteKnight.png" />
                </image></ImageView>
-            <ImageView fx:id="whiteBishopLeft" fitHeight="105.0" fitWidth="105.0" onMouseClicked="#onMouseClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
+            <ImageView fx:id="whiteBishophLeft" fitHeight="105.0" fitWidth="105.0" onMouseClicked="#onMouseClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
                <image>
                   <Image url="@../images/whiteBishoph.png" />
                </image></ImageView>
@@ -179,7 +179,7 @@
                <image>
                   <Image url="@../images/whiteKing.png" />
                </image></ImageView>
-            <ImageView fx:id="whiteBishopRight" fitHeight="105.0" fitWidth="105.0" onMouseClicked="#onMouseClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
+            <ImageView fx:id="whiteBishophRight" fitHeight="105.0" fitWidth="105.0" onMouseClicked="#onMouseClick" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="7">
                <image>
                   <Image url="@../images/whiteBishoph.png" />
                </image></ImageView>

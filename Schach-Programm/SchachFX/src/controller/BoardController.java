@@ -1,6 +1,7 @@
 package controller;
 
 import Pieces.Board;
+import Pieces.ChessColor;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -65,11 +66,9 @@ public class BoardController {
     public Node rookPane;
     public static ListView whiteMovesID;
     public static ListView blackMovesID;
+    public ChessColor cc;
     public GridPane boardId = new GridPane();
-    public Pieces.Board GameBoard = new Board(boardId);
-    /*private void movePawn(Node selectedPane) {
-        System.out.println(GridPane.getColumnIndex(selectedPane) + " " + GridPane.getRowIndex(selectedPane));
-    }*/
+    public Pieces.Board GameBoard = new Board(boardId,cc);
 
     public void onMouseClick(MouseEvent mouseEvent) {
         Node selectedPane = (Node) mouseEvent.getSource();
@@ -82,7 +81,6 @@ public class BoardController {
                 clickedWhiteQueen = false;
                 clickedWhiteRook = false;
                 pawnPane = selectedPane;
-
             } else if (selectedPane.getId().contains("black")) {
                 if (clickedWhitePawn) {
                     GameBoard.killPawn(pawnPane,selectedPane);
@@ -141,7 +139,6 @@ public class BoardController {
                 rookPane = selectedPane;
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
-
             if (clickedWhitePawn) {
                 GameBoard.movePawn(pawnPane,selectedPane);
             } else if (clickedWhiteKing) {
