@@ -168,7 +168,7 @@ public class Server {
                                     pieceUebergeben = false;
                                     nodeSet = false;
                                 }
-                            } else {
+                            }else {
                                 fromTo = killMaybe.toString();
                                 System.out.println(fromTo);
                                 pane = streamFromClient.readLine();
