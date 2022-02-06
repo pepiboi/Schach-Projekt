@@ -70,7 +70,7 @@ public class BoardController implements Initializable {
     public Node rookPane;
     public static ListView<String> whiteMovesID;
     public static ListView<String> blackMovesID;
-    public ChessColor cc = ChessColor.WHITE;
+    public ChessColor cc = ChessColor.BLACK;
     public GridPane boardId;
     public Pieces.Board GameBoard;
 
