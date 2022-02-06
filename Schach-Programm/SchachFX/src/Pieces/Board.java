@@ -31,16 +31,15 @@ public class Board {
     public Node[][] generateBoard() {
         Node[][] board = new Node[8][8];
         for (Node node : gp.getChildren()) {
-            if(node.toString().contains("ImageView")){
+            if (node.toString().contains("ImageView")) {
                 try {
-                    if(GridPane.getColumnIndex(node) == null && GridPane.getRowIndex(node) == null){
+                    if (GridPane.getColumnIndex(node) == null && GridPane.getRowIndex(node) == null) {
                         board[0][0] = node;
-                    }else if(GridPane.getRowIndex(node) == null){
+                    } else if (GridPane.getRowIndex(node) == null) {
                         board[GridPane.getColumnIndex(node)][0] = node;
-                    }else if(GridPane.getColumnIndex(node) == null){
+                    } else if (GridPane.getColumnIndex(node) == null) {
                         board[0][GridPane.getRowIndex(node)] = node;
-                    }
-                    else{
+                    } else {
                         board[GridPane.getColumnIndex(node)][GridPane.getRowIndex(node)] = node;
                     }
                 } catch (Exception e) {
@@ -64,102 +63,71 @@ public class Board {
 
         boolean found = false;
 
-        Node destiPlusI = chesspiece;
-        boolean whiteInfront = false;
-
-        try{
-            if(GridPane.getRowIndex(destination).equals(GridPane.getRowIndex(chesspiece))){
-                for (int i = GridPane.getColumnIndex(chesspiece) - 1; i >= GridPane.getColumnIndex(destination); i--) {
-                    if(chessboard[GridPane.getColumnIndex(chesspiece) - i][GridPane.getRowIndex(chesspiece)] != null){
-                        System.out.println("Something in the way.");
-                        break;
-                    }else if((GridPane.getColumnIndex(chesspiece) - i) == GridPane.getColumnIndex(destination)){
-                        GridPane.setColumnIndex(chesspiece, i);
-                        GridPane.setRowIndex(chesspiece,GridPane.getRowIndex(chesspiece));
-                        chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
-                        chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
-                        found = true;
-                    }
-                }
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
         try {
-            if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
-                System.out.println("Der Turm ist kein Pferd");
-            } else if ((GridPane.getRowIndex(chesspiece) != GridPane.getRowIndex(destination)) && (GridPane.getColumnIndex(chesspiece) != GridPane.getColumnIndex(destination))) {
-                System.out.println("Rook can not move to: " + GridPane.getRowIndex(destination) + " | " + GridPane.getColumnIndex(destination));
-            } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
-                System.out.println("Der Turm ist kein Pferd");
-            } else if ((GridPane.getRowIndex(chesspiece) == GridPane.getRowIndex(destination))) {
-                System.out.println("Reihe");
-                if (GridPane.getColumnIndex(chesspiece) > GridPane.getColumnIndex(destination)) {
-                    //links
-                    for (int i = GridPane.getColumnIndex(chesspiece) - 1; i >= GridPane.getColumnIndex(destination); i--) {
-                            if(GridPane.getColumnIndex(chesspiece) - i == GridPane.getColumnIndex(destination)){
-
-                            }
-                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
-                        somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                    }
-                } else {
-                    for (int i = GridPane.getColumnIndex(chesspiece) + 1; i <= GridPane.getColumnIndex(destination); i++) {
-                        GridPane.setColumnIndex(destiPlusI, i);
-                        if (destiPlusI.toString().contains("white")) {
-                            whiteInfront = true;
+            if (GridPane.getRowIndex(destination) == GridPane.getRowIndex(chesspiece)) {
+                if (GridPane.getColumnIndex(destination) < GridPane.getColumnIndex(chesspiece)) {
+                    for (int i = 1; i <= (GridPane.getColumnIndex(chesspiece) - GridPane.getColumnIndex(destination)); i++) {
+                        if (chessboard[GridPane.getColumnIndex(chesspiece) - i][GridPane.getRowIndex(chesspiece)] != null) {
+                            System.out.println("Something in the way.");
+                            break;
+                        } else if ((GridPane.getColumnIndex(chesspiece) - i) == GridPane.getColumnIndex(destination)) {
+                            chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                            GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                            found = true;
                         }
                     }
-                    if (whiteInfront) {
-                        System.out.println("White Piecec can not be overtaken with Rook");
-                    } else {
-                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
-                        somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                } else {
+                    for (int i = 1; i <= (GridPane.getColumnIndex(destination) - GridPane.getColumnIndex(chesspiece)); i++) {
+                        if (chessboard[GridPane.getColumnIndex(chesspiece) + i][GridPane.getRowIndex(chesspiece)] != null) {
+                            System.out.println("Something in the way.");
+                            break;
+                        } else if ((GridPane.getColumnIndex(chesspiece) + i) == GridPane.getColumnIndex(destination)) {
+                            chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                            GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                            found = true;
+                        }
                     }
                 }
-            } else if (GridPane.getColumnIndex(chesspiece) == GridPane.getColumnIndex(chesspiece)) {
-                if (GridPane.getRowIndex(chesspiece) > GridPane.getRowIndex(destination)) {
-                    //- rechnen um nach oben zu gehen
-                    for (int i = GridPane.getRowIndex(chesspiece) - 1; i >= GridPane.getRowIndex(destination); i--) {
-                        GridPane.setRowIndex(destiPlusI, i);
-                        if (destiPlusI.toString().contains("white")) {
-                            whiteInfront = true;
+            } else if (GridPane.getColumnIndex(destination).equals(GridPane.getColumnIndex(chesspiece))) {
+                if (GridPane.getRowIndex(destination) < GridPane.getRowIndex(chesspiece)) {
+                    for (int i = 1; i <= (GridPane.getRowIndex(chesspiece) - GridPane.getRowIndex(destination)); i++) {
+                        if (chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - i] != null) {
+                            System.out.println("Something in the way.");
+                            break;
+                        } else if ((GridPane.getRowIndex(chesspiece) - i) == GridPane.getRowIndex(destination)) {
+                            chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                            GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
+                            GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                            found = true;
                         }
-                    }
-                    if (whiteInfront) {
-                        System.out.println("White Piecec can not be overtaken with Rook");
-                    } else {
-                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                        somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
                     }
                 } else {
-                    for (int i = GridPane.getRowIndex(chesspiece) + 1; i <= GridPane.getRowIndex(destination); i++) {
-                        GridPane.setRowIndex(destiPlusI, i);
-                        if (destiPlusI.toString().contains("white")) {
-                            whiteInfront = true;
+                    for (int i = 1; i <= (GridPane.getRowIndex(destination) - GridPane.getRowIndex(chesspiece)); i++) {
+                        if (chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) + i] != null) {
+                            System.out.println("Something in the way.");
+                            break;
+                        } else if ((GridPane.getRowIndex(chesspiece) + i) == GridPane.getRowIndex(destination)) {
+                            chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                            GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
+                            GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                            found = true;
                         }
-                    }
-                    if (whiteInfront) {
-                        System.out.println("White Piecec can not be overtaken with Rook");
-                    } else {
-                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                        somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
                     }
                 }
             } else {
-                System.out.println("Rook can not move to: " + GridPane.getRowIndex(destination) + " | " + GridPane.getColumnIndex(destination));
+                System.out.println("Not accecable pane.");
+            }
+            if (!found) {
+                System.out.println("Not accecable pane.");
             }
         } catch (Exception e) {
-            System.out.println("Exception was thrown at moving Rook");
+            e.printStackTrace();
         }
+        found = false;
     }
 
     public void moveKing(Node chesspiece, Node destination) {
@@ -172,6 +140,14 @@ public class Board {
         } else if (GridPane.getRowIndex(chesspiece) == null) {
             GridPane.setRowIndex(chesspiece, 0);
         }
+
+        try{
+            if(GridPane.getRowIndex(chesspiece) == GridPane.getRowIndex()){
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         try {
             if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
                 System.out.println("Der König ist kein Pferd");
@@ -179,35 +155,29 @@ public class Board {
 
                 System.out.println("Der König ist kein Pferd");
             } else if ((GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
-                /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
-                whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) || GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece)) && (GridPane.getColumnIndex(destination) == GridPane.getColumnIndex(chesspiece))) {
-                /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
-                whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
             } else if ((GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece) || GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) && (GridPane.getRowIndex(destination) == GridPane.getRowIndex(chesspiece))) {
-                /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
-                whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(chesspiece));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else {
                 System.out.println("King can not be moved at: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));
             }
@@ -229,43 +199,34 @@ public class Board {
 
         try {
             if (GridPane.getColumnIndex(destination) == GridPane.getColumnIndex(chesspiece)) {
-                if (GridPane.getRowIndex(destination) + 2 == 6 || GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece)) {
-                    /*BoardController.whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
-                    BoardController.whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(destination) + "|" + GridPane.getRowIndex(destination));*/
-                    if (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece)) {
-                        System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                        GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                        GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
-                        chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
-                        chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
-                        somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                    } else if ((GridPane.getRowIndex(destination) + 2 == 6)) {
-
-
-                        if(chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(destination)+1] == null) {
-                            somethingMoved = true;
-                            movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-
-                            System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
-                            GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                            GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
-                            chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                if (GridPane.getRowIndex(chesspiece) == 6) {
+                    if (chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - 1] == null) {
+                        if (GridPane.getRowIndex(destination) == GridPane.getRowIndex(chesspiece) - 2) {
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - 2] = chesspiece;
                             chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
-                        }else{
-                            System.out.println("Jemand steht vor dir du dummer hurensohn.");
+                            GridPane.setRowIndex(chesspiece, 4);
+                        } else if (GridPane.getRowIndex(destination) == GridPane.getRowIndex(chesspiece) - 1) {
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - 1] = chesspiece;
+                            chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                            GridPane.setRowIndex(chesspiece, (GridPane.getRowIndex(chesspiece) - 1));
+                        } else {
+                            System.out.println("Inaccecable Pos.");
                         }
+                    }else{
+                        System.out.println("Inaccecable Pos");
                     }
-
+                } else if (GridPane.getRowIndex(destination) == GridPane.getRowIndex(chesspiece) - 1) {
+                    chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - 1] = chesspiece;
+                    chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                    GridPane.setRowIndex(chesspiece, (GridPane.getRowIndex(chesspiece) - 1));
+                } else {
+                    System.out.println("Inaccecable Pos.");
                 }
-            } else if (GridPane.getRowIndex(destination) == 0) {
-                //Dann darf sich der Spieler eine Figur zurückholen
-            } else{
-                System.out.println("Das darf der Bauer leider nicht!");
-                somethingMoved = false;
+            } else {
+                System.out.println("Inaccecable Pos.");
             }
         } catch (Exception e) {
-            System.out.println("Exception was thrown at moving Pawn");
+            e.printStackTrace();
         }
     }
 
@@ -279,6 +240,7 @@ public class Board {
         } else if (GridPane.getRowIndex(chesspiece) == null) {
             GridPane.setRowIndex(chesspiece, 0);
         }
+
         int j = 1;
 
         do {
@@ -288,14 +250,14 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 break;
             } else if ((GridPane.getColumnIndex(chesspiece) - j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
@@ -303,7 +265,7 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 break;
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
@@ -311,18 +273,17 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 break;
             }
             j++;
             if (j > 8) {
-                moveRook(chesspiece,destination);
+                moveRook(chesspiece, destination);
                 break;
             }
         } while (true);
         j = 1;
     }
-
 
 
     public void moveBishoph(Node chesspiece, Node destination) {
@@ -342,19 +303,19 @@ public class Board {
 
         do {
             if ((GridPane.getColumnIndex(chesspiece) - j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
-                    GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
-                    GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
-                    chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
-                    chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
-                    somethingMoved = true;
-                    movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                somethingMoved = true;
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 break;
             } else if ((GridPane.getColumnIndex(chesspiece) - j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
@@ -362,7 +323,7 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 break;
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) + j == GridPane.getRowIndex(destination))) {
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
@@ -370,7 +331,7 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                 break;
             }
             j++;
@@ -398,27 +359,35 @@ public class Board {
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece))) {
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
 
             } else if ((GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece))) {
                 System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
+                chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             }
         } catch (Exception e) {
             System.out.println("Movin Knight exception");
@@ -446,7 +415,7 @@ public class Board {
                         GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(p));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(p));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
                     }
                 }
             } else if (GridPane.getColumnIndex(chesspiece) == 1 && GridPane.getRowIndex(p) != 7 && GridPane.getRowIndex(p) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(p) == 0 || GridPane.getRowIndex(p) == null) {
@@ -458,7 +427,7 @@ public class Board {
                         GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(p));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(p));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
                     }
                 }
             } else if (GridPane.getRowIndex(p) != 7 && GridPane.getRowIndex(p) + 1 == GridPane.getRowIndex(chesspiece) && (GridPane.getColumnIndex(p) + 1 == GridPane.getColumnIndex(chesspiece) || GridPane.getColumnIndex(p) - 1 == GridPane.getColumnIndex(chesspiece)) || GridPane.getRowIndex(p) == null) {
@@ -470,7 +439,7 @@ public class Board {
                         GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(p));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(p));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
                     }
                 }
             } else if (GridPane.getColumnIndex(p) == null && GridPane.getRowIndex(p) == null && (GridPane.getColumnIndex(p) + 1 == GridPane.getColumnIndex(chesspiece) || GridPane.getColumnIndex(p) - 1 == GridPane.getColumnIndex(chesspiece) || GridPane.getColumnIndex(p) == null) || GridPane.getRowIndex(p) == null) {
@@ -482,7 +451,7 @@ public class Board {
                         GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(p));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(p));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
                     }
                 }
             }
@@ -513,8 +482,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains( getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
@@ -523,8 +492,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains(getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
                 break;
@@ -534,8 +503,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains( getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
                 break;
@@ -545,21 +514,20 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains( getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
                 break;
             }
             j++;
             if (j > 8) {
-                killRook(chesspiece,destination);
+                killRook(chesspiece, destination);
                 break;
             }
         } while (true);
         j = 1;
     }
-
 
 
     public void killRook(Node chesspiece, Node destination) {
@@ -604,7 +572,7 @@ public class Board {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                     }
                 } else {
                     for (int i = GridPane.getColumnIndex(chesspiece) + 1; i <= GridPane.getColumnIndex(destination); i++) {
@@ -629,7 +597,7 @@ public class Board {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                     }
                 }
             } else if (GridPane.getColumnIndex(chesspiece) == GridPane.getColumnIndex(chesspiece)) {
@@ -653,7 +621,7 @@ public class Board {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                         GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                     }
                 } else {
                     for (int i = GridPane.getRowIndex(chesspiece) + 1; i <= GridPane.getRowIndex(destination); i++) {
@@ -674,7 +642,7 @@ public class Board {
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                         GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                         somethingMoved = true;
-                        movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                        movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
                     }
                 }
             } else {
@@ -704,7 +672,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece))) {
                 if (destination.toString().contains("black")) {
                     destination.setVisible(false);
@@ -713,7 +681,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece))) {
                 if (destination.toString().contains("black")) {
                     destination.setVisible(false);
@@ -722,7 +690,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             } else if ((GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 1 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) + 2 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 1 == GridPane.getColumnIndex(chesspiece))) {
                 if (destination.toString().contains("black")) {
                     destination.setVisible(false);
@@ -731,7 +699,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(destination));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
             }
         } catch (Exception e) {
             System.out.println("Killing with Knight exception");
@@ -760,8 +728,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains( getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
             } else if ((GridPane.getColumnIndex(chesspiece) + j == GridPane.getColumnIndex(destination)) && (GridPane.getRowIndex(chesspiece) - j == GridPane.getRowIndex(destination))) {
@@ -770,8 +738,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains(getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
                 break;
@@ -781,8 +749,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains( getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
                 break;
@@ -792,8 +760,8 @@ public class Board {
                 chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
                 chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+destination.toString();
-                if(destination.toString().contains( getOpposite())){
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + destination.toString();
+                if (destination.toString().contains(getOpposite())) {
                     destination.setVisible(false);
                 }
                 break;
@@ -832,7 +800,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(p));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(p));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
             } else if ((GridPane.getRowIndex(p) + 1 == GridPane.getRowIndex(chesspiece) || GridPane.getRowIndex(p) - 1 == GridPane.getRowIndex(chesspiece)) && (GridPane.getColumnIndex(p) == GridPane.getColumnIndex(chesspiece))) {
                 /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
                 whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(p) + "|" + GridPane.getRowIndex(p));*/
@@ -841,7 +809,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(p));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(chesspiece));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
             } else if ((GridPane.getColumnIndex(p) + 1 == GridPane.getColumnIndex(chesspiece) || GridPane.getColumnIndex(p) - 1 == GridPane.getColumnIndex(chesspiece)) && (GridPane.getRowIndex(p) == GridPane.getRowIndex(chesspiece))) {
                 /*whiteMovesID.getItems().add(chesspiece.getId() + " from: " + GridPane.getColumnIndex(chesspiece) + "|" + GridPane.getRowIndex(chesspiece));
                 whiteMovesID.getItems().add(chesspiece.getId() + " to: " + GridPane.getColumnIndex(p) + "|" + GridPane.getRowIndex(p));*/
@@ -850,7 +818,7 @@ public class Board {
                 GridPane.setRowIndex(chesspiece, GridPane.getRowIndex(chesspiece));
                 GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(p));
                 somethingMoved = true;
-                movedNodeToString = "From: "+chesspiece.toString()+" || To: "+p.toString();
+                movedNodeToString = "From: " + chesspiece.toString() + " || To: " + p.toString();
             } else {
                 System.out.println("King can not be moved at: " + GridPane.getColumnIndex(p) + "|" + GridPane.getRowIndex(p));
             }
