@@ -131,7 +131,7 @@ public class BoardController implements Initializable {
                 clickedWhiteKnight = false;
                 clickedWhiteRook = false;
                 kingPane = selectedPane;
-            } else if (selectedPane.getId().contains("whiteQueen")){
+            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Queen")){
                 clickedWhiteQueen = true;
                 clickedWhiteKing = false;
                 clickedWhitePawn = false;
@@ -139,7 +139,7 @@ public class BoardController implements Initializable {
                 clickedWhiteKnight = false;
                 clickedWhiteRook = false;
                 queenPane = selectedPane;
-            } else if (selectedPane.getId().contains("whiteBishoph")){
+            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Bishoph")){
                 clickedWhiteBishoph = true;
                 clickedWhitePawn = false;
                 clickedWhiteKing = false;
@@ -147,7 +147,7 @@ public class BoardController implements Initializable {
                 clickedWhiteKnight = false;
                 clickedWhiteRook = false;
                 bishophPane = selectedPane;
-            } else if (selectedPane.getId().contains("whiteKnight")){
+            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Knight")){
                 clickedWhiteKnight = true;
                 clickedWhitePawn = false;
                 clickedWhiteKing = false;
@@ -155,7 +155,7 @@ public class BoardController implements Initializable {
                 clickedWhiteQueen = false;
                 clickedWhiteRook = false;
                 knightPane = selectedPane;
-            }else if (selectedPane.getId().contains("whiteRook")){
+            }else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Rook")){
                 clickedWhiteRook = true;
                 clickedWhitePawn = false;
                 clickedWhiteKing = false;
