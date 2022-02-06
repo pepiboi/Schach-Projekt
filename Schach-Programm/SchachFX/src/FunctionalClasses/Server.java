@@ -27,7 +27,7 @@ public class Server {
     int count = 0;
     String positionAndPaneFromClient;
     String clientConnectionNameOne;
-    public static boolean clientSentToServerHeIsConnected = false;
+    //public static boolean clientSentToServerHeIsConnected = false;
     public static String pane;
     public static String position;
     public static String fromTo;
@@ -35,6 +35,7 @@ public class Server {
     public static String pieceID;
     public static boolean pieceUebergeben = false;
     private boolean nodeSet = false;
+    public static String desti;
 
     public Server() {
         try {
@@ -68,7 +69,7 @@ public class Server {
                         count++;
                     }
 
-                } else if (count == 1){
+                } else if (count == 1) {
                     streamFromClient = new BufferedReader(new InputStreamReader((clientSocket.getInputStream())));
                     positionAndPaneFromClient = streamFromClient.readLine();
                     System.out.println(positionAndPaneFromClient);
@@ -100,51 +101,120 @@ public class Server {
                                 }
                             });
                         } else {
-                            System.out.println(booleanTrue);
-                            fromTo = streamFromClient.readLine();
-                            System.out.println(fromTo);
-                            pane = streamFromClient.readLine();
-                            System.out.println(pane);
-                            position = streamFromClient.readLine();
-                            System.out.println(position);
-                            String[] columnRowArray = position.split(" ");
-                            int column = Integer.parseInt(columnRowArray[0]);
-                            int row = Integer.parseInt(columnRowArray[1]);
-                            System.out.println(column + " " + row + " Parse completed");
+                            String killMaybe = streamFromClient.readLine();
+                            if (killMaybe.equals("kill")) {
+                                System.out.println("kill");
+                                fromTo = streamFromClient.readLine();
+                                System.out.println(fromTo);
+                                pane = streamFromClient.readLine();
+                                System.out.println(pane);
+                                position = streamFromClient.readLine();
+                                System.out.println(position);
+                                String[] columnRowArray = position.split(" ");
+                                int column = Integer.parseInt(columnRowArray[0]);
+                                int row = Integer.parseInt(columnRowArray[1]);
+                                System.out.println(column + " " + row + " Parse completed");
 
-                            pieceID = streamFromClient.readLine();
-                            //NumberFormat
-                            System.out.println(pieceID);
-                            //set Pieces auf sache
-                            Node pieceNode = null;
-                            for (Node node : Board.gp.getChildren()) {
-                                if (node == null){
-                                    continue;
+                                pieceID = streamFromClient.readLine();
+                                //NumberFormat
+                                System.out.println(pieceID);
+                                desti = streamFromClient.readLine();
+                                System.out.println(desti);
+
+                                //set Pieces auf sache
+                                Node pieceNode = null;
+                                for (Node node : Board.gp.getChildren()) {
+                                    if (node == null) {
+                                        continue;
+                                    }
+                                    if (node.toString().contains(pieceID) && nodeSet == false) {
+                                        pieceNode = node;
+                                        pieceUebergeben = true;
+                                        System.out.println("Node found!");
+                                        nodeSet = true;
+                                    }
                                 }
-                                if (node.toString().contains(pieceID) && nodeSet == false) {
-                                    pieceNode = node;
-                                    pieceUebergeben = true;
-                                    System.out.println("Node found!");
-                                    nodeSet = true;
+                                Node destiNode = null;
+                                for (Node node : Board.gp.getChildren()) {
+                                    if (node == null) {
+                                        continue;
+                                    }
+                                    if (node.toString().contains(desti)) {
+                                        node.setVisible(false);
+                                        destiNode = node;
+                                        pieceUebergeben = true;
+                                        System.out.println("Node found!");
+                                        nodeSet = true;
+                                    }
                                 }
-                            }
-                            if (pieceNode == null) {
-                                System.out.println("ID wurde nicht gefunden!");
-                                pieceUebergeben = false;
-                                nodeSet = false;
-                            } else if(nodeSet == true){
-                                GridPane.setColumnIndex(pieceNode, column);
-                                GridPane.setRowIndex(pieceNode, row);
-                                System.out.println("Node set to: " + column + " " + row);
-                                pieceUebergeben = false;
-                                nodeSet = false;
-                            }else{
-                                System.out.println("ID wurde nicht gefunden! --> Node set false");
-                                pieceUebergeben = false;
-                                nodeSet = false;
-                            }
+                                if (pieceNode == null) {
+                                    System.out.println("ID wurde nicht gefunden!");
+                                    pieceUebergeben = false;
+                                    nodeSet = false;
+                                } else if (nodeSet == true) {
+                                    /*GridPane.setColumnIndex(pieceNode, column);
+                                    GridPane.setRowIndex(pieceNode, row);
+                                    System.out.println("Node set to: " + column + " " + row);
+                                    pieceUebergeben = false;
+                                    nodeSet = false;*/
+                                    //Nullpointer
+                                    destiNode.setVisible(false);
+                                    GridPane.setColumnIndex(pieceNode, column);
+                                    GridPane.setRowIndex(pieceNode, row);
+                                    System.out.println("Node set to: " + column + " " + row);
+                                    pieceUebergeben = false;
+                                    nodeSet = false;
 
+                                } else {
+                                    System.out.println("ID wurde nicht gefunden! --> Node set false");
+                                    pieceUebergeben = false;
+                                    nodeSet = false;
+                                }
+                            } else {
+                                fromTo = killMaybe.toString();
+                                System.out.println(fromTo);
+                                pane = streamFromClient.readLine();
+                                System.out.println(pane);
+                                position = streamFromClient.readLine();
+                                System.out.println(position);
+                                String[] columnRowArray = position.split(" ");
+                                int column = Integer.parseInt(columnRowArray[0]);
+                                int row = Integer.parseInt(columnRowArray[1]);
+                                System.out.println(column + " " + row + " Parse completed");
 
+                                pieceID = streamFromClient.readLine();
+                                //NumberFormat
+                                System.out.println(pieceID);
+                                //set Pieces auf sache
+                                Node pieceNode = null;
+                                for (Node node : Board.gp.getChildren()) {
+                                    if (node == null) {
+                                        continue;
+                                    }
+                                    if (node.toString().contains(pieceID) && nodeSet == false) {
+                                        pieceNode = node;
+                                        pieceUebergeben = true;
+                                        System.out.println("Node found!");
+                                        nodeSet = true;
+                                    }
+                                }
+                                if (pieceNode == null) {
+                                    System.out.println("ID wurde nicht gefunden!");
+                                    pieceUebergeben = false;
+                                    nodeSet = false;
+                                } else if (nodeSet == true) {
+                                    GridPane.setColumnIndex(pieceNode, column);
+                                    GridPane.setRowIndex(pieceNode, row);
+                                    System.out.println("Node set to: " + column + " " + row);
+                                    pieceUebergeben = false;
+                                    nodeSet = false;
+                                } else {
+                                    System.out.println("ID wurde nicht gefunden! --> Node set false");
+                                    pieceUebergeben = false;
+                                    nodeSet = false;
+                                }
+
+                            }
                         }
                         r = false;
                     }

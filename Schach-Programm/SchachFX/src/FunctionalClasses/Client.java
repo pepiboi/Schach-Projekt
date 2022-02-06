@@ -2,6 +2,7 @@ package FunctionalClasses;
 
 import Pieces.Board;
 import controller.LoginController;
+import javafx.scene.Node;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +50,28 @@ public class Client {
                     streamToServer.println(witchPane);
                     streamToServer.println(position);
                     streamToServer.println(id);
+                //System.out.println(destination);
                     System.out.println("Pane went through");
+                Board.somethingMoved = false;
+                running = false;
+                System.out.println("Running at sending Position set to false");
+            }
+        }
+    }
+
+    public static void sendCurrentPositionKill(String witchPane, String position, String id, String destination){
+        boolean running = true;
+        while(running){
+            if (Board.somethingMoved == true){
+                System.out.println(Board.movedNodeToString);
+                streamToServer.println("kill");
+                streamToServer.println(Board.movedNodeToString);
+                streamToServer.println(witchPane);
+                streamToServer.println(position);
+                streamToServer.println(id);
+                streamToServer.println(destination);
+
+                System.out.println("Pane went through");
                 Board.somethingMoved = false;
                 running = false;
                 System.out.println("Running at sending Position set to false");
