@@ -40,8 +40,6 @@ public class Server {
     public Server() {
         try {
             serverSocket = new ServerSocket(1234);
-
-
         } catch (IOException e) {
             System.out.println("Serversocket creating failed");
         }
