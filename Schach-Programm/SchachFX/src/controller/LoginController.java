@@ -119,7 +119,7 @@ public class LoginController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("waitingLoungeView.fxml"));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 650, 650);
+            scene = new Scene(fxmlLoader.load(), 580, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }
