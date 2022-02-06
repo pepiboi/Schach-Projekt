@@ -40,7 +40,7 @@ public class Client {
         }
     }
 
-    public static void sendCurrentPosition(String witchPane, String position){
+    public static void sendCurrentPosition(String witchPane, String position, String id){
         boolean running = true;
         while(running){
             if (Board.somethingMoved == true){
@@ -48,6 +48,7 @@ public class Client {
                     streamToServer.println(Board.movedNodeToString);
                     streamToServer.println(witchPane);
                     streamToServer.println(position);
+                    streamToServer.println(id);
                     System.out.println("Pane went through");
                 Board.somethingMoved = false;
                 running = false;
