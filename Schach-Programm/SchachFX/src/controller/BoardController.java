@@ -18,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class BoardController implements Initializable {
@@ -70,7 +71,7 @@ public class BoardController implements Initializable {
     public Node rookPane;
     public static ListView<String> whiteMovesID;
     public static ListView<String> blackMovesID;
-    public ChessColor cc = ChessColor.BLACK;
+    public ChessColor cc = ChessColor.WHITE;
     public GridPane boardId;
     public Pieces.Board gameBoard;
     public static Node selectedPane;
@@ -80,7 +81,7 @@ public class BoardController implements Initializable {
     public void onMouseClick(MouseEvent mouseEvent) {
         selectedPane = (Node) mouseEvent.getSource();
         if (selectedPane.toString().contains("ImageView")) {
-            if (selectedPane.getId().contains("whitePawn")) {
+            if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Pawn")) {
                 clickedWhitePawn = true;
                 clickedWhiteKing = false;
                 clickedWhiteKnight = false;
@@ -88,7 +89,7 @@ public class BoardController implements Initializable {
                 clickedWhiteQueen = false;
                 clickedWhiteRook = false;
                 pawnPane = selectedPane;
-            } else if (selectedPane.getId().contains("black")) {
+            } else if (selectedPane.getId().contains(Board.getOpposite())) {
                 if (clickedWhitePawn) {
                     Board.killPawn(pawnPane,selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true){
@@ -122,7 +123,7 @@ public class BoardController implements Initializable {
                 }else{
                     System.out.println("No Piece selected!");
                 }
-            } else if (selectedPane.getId().contains("whiteKing")) {
+            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "King")) {
                 clickedWhiteKing = true;
                 clickedWhitePawn = false;
                 clickedWhiteQueen = false;
