@@ -109,7 +109,6 @@ public class LoginController implements Initializable {
         client.clientHasOpenedBoardView(clientConnected);
         System.out.println("After clientHasOpenedBoardView");
 
-
     }
 
     public void onStartServer(MouseEvent mouseEvent) {
