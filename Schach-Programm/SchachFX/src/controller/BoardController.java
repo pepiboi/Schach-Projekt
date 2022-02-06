@@ -210,4 +210,3 @@ public class BoardController implements Initializable {
         GameBoard = new Board(boardId,cc);
     }
 }
-
