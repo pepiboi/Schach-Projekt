@@ -23,7 +23,7 @@ public class Client {
             String name;
             toServer = new Socket(LoginController.ipClient,1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
-            streamToServer = new PrintStream(toServer.getOutputStream());
+            streamToServer = new PrintStream(toServer.getOutputStream(), true);
             System.out.println("Enter Connection Name");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             //name = reader.readLine();
@@ -40,21 +40,15 @@ public class Client {
         }
     }
 
-    public static void sendCurrentPosition(String witchPane){
+    public static void sendCurrentPosition(String witchPane, String position){
         boolean running = true;
         while(running){
             if (Board.somethingMoved == true){
                 System.out.println(Board.movedNodeToString);
-                try {
-                    toServer = new Socket(LoginController.ipClient,1234);
-                    streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
-                    streamToServer = new PrintStream(toServer.getOutputStream());
                     streamToServer.println(Board.movedNodeToString);
                     streamToServer.println(witchPane);
+                    streamToServer.println(position);
                     System.out.println("Pane went through");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 Board.somethingMoved = false;
                 running = false;
                 System.out.println("Running at sending Position set to false");
@@ -64,15 +58,12 @@ public class Client {
 
     public static void clientHasOpenedBoardView(boolean isConnected){
         if (isConnected == true){
-            try {
-                //toServer = new Socket(LoginController.ipClient,1234);
+                /*toServer = new Socket(LoginController.ipClient,1234);
                 streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
-                streamToServer = new PrintStream(toServer.getOutputStream());
+                streamToServer = new PrintStream(toServer.getOutputStream(), true);*/
                 streamToServer.println("boolean = "+isConnected);
                 System.out.println("boolean = "+isConnected);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         }else{
             System.out.println("isConnected = false");
         }

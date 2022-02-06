@@ -23,8 +23,10 @@ public class Server{
      int count = 0;
      String positionAndPaneFromClient;
      String clientConnectionNameOne;
-     String clientConnectionNameTwo;
      public static boolean clientSentToServerHeIsConnected = false;
+     public static String fromTo;
+     public static String pane;
+     public static String position;
 
     public Server() {
         try{
@@ -41,7 +43,7 @@ public class Server{
         try{
             while(true)
             {
-                if (count <= 1){
+                if (count <= 0){
                     if (count == 0){
                         System.out.println("Server has been created");
                         clientSocket = serverSocket.accept();
@@ -49,15 +51,13 @@ public class Server{
                 System.out.println("Client connection number "+count);*/
                         System.out.println("accepted");
                         streamFromClient = new BufferedReader(new InputStreamReader((clientSocket.getInputStream())));
-                        System.out.println("Reader");
                         streamToClient = new PrintStream(clientSocket.getOutputStream());
-                        System.out.println("Writer");
                         String str = streamFromClient.readLine();
                         System.out.println(str);
-                        System.out.println("Reader from client");
                         clientConnectionNameOne = str;
                         System.out.println("Client connection name "+str);
                         streamToClient.println("Welcome "+str);
+                        System.out.println("Welcome");
                         count++;
                     }
 
@@ -65,26 +65,39 @@ public class Server{
                     streamFromClient = new BufferedReader(new InputStreamReader((clientSocket.getInputStream())));
                     positionAndPaneFromClient = streamFromClient.readLine();
                     System.out.println(positionAndPaneFromClient);
+                    System.out.println("else count >= 0");
                 }
                 String booleanTrue = "";
                 boolean r = true;
                 while (r == true){
                     System.out.println("warten bis streamFromClient");
                     booleanTrue = streamFromClient.readLine();
+                    System.out.println("after booleanTrue = streamFromClient.readLine()");
                     if (booleanTrue != ""){
-                        if (LoginController.clientConnected == true){
+                        System.out.println(booleanTrue);
+                        System.out.println("in if booleanTrue != ");
+                        if (booleanTrue != ""){
                             System.out.println("in clientConnected = true");
-                            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
-                            Scene scene = null;
-                            try {
-                                scene = new Scene(fxmlLoader.load(), 1177, 1007);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            LoginController.serverStage.setResizable(false);
-                            LoginController.serverStage.setTitle("Board");
-                            LoginController.serverStage.setScene(scene);
-                            LoginController.serverStage.show();
+                            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
+                            Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Stage serverStage = LoginController.serverStage;
+                                    serverStage.setResizable(false);
+                                    serverStage.setTitle("ServerBoard");
+                                    serverStage.setScene(scene);
+                                    serverStage.show();
+                                }
+                            });
+                        }else{
+                            fromTo = booleanTrue;
+                            System.out.println(fromTo);
+                            pane = streamFromClient.readLine();
+                            System.out.println(pane);
+                            position = streamFromClient.readLine();
+                            System.out.println(position);
+
                         }
                         r = false;
                     }

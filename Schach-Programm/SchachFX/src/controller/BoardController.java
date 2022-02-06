@@ -88,17 +88,35 @@ public class BoardController implements Initializable {
                 pawnPane = selectedPane;
             } else if (selectedPane.getId().contains("black")) {
                 if (clickedWhitePawn) {
-                    GameBoard.killPawn(pawnPane,selectedPane);
+                    Board.killPawn(pawnPane,selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("pawnPane", Board.positionMoved);
+                    }
                 } else if (clickedWhiteKing) {
-                    GameBoard.attackKing(kingPane,selectedPane);
+                    Board.attackKing(kingPane,selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("kingPane", Board.positionMoved);
+                    }
                 } else if(clickedWhiteQueen){
-                    GameBoard.killQueen(queenPane,selectedPane);
+                    Board.killQueen(queenPane,selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("queenPane", Board.positionMoved);
+                    }
                 }else if(clickedWhiteKnight){
-                    GameBoard.killKnight(knightPane,selectedPane);
+                    Board.killKnight(knightPane,selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("knightPane", Board.positionMoved);
+                    }
                 }else if(clickedWhiteBishoph){
-                    GameBoard.killBishoph(bishophPane,selectedPane);
+                    Board.killBishoph(bishophPane,selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("bishophPane", Board.positionMoved);
+                    }
                 }else if(clickedWhiteRook){
-                    GameBoard.killRook(rookPane,selectedPane);
+                    Board.killRook(rookPane,selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("rookPane", Board.positionMoved);
+                    }
                 }else{
                     System.out.println("No Piece selected!");
                 }
@@ -145,58 +163,34 @@ public class BoardController implements Initializable {
             }
         } else if (selectedPane.toString().contains("Rectangle")) {
             if (clickedWhitePawn) {
-                GameBoard.movePawn(pawnPane,selectedPane);
-                if (LoginController.clientConnected == true){
-                    if (LoginController.clientConnected == true){
-                        Client.sendCurrentPosition("pawnPane");
-                    }else {
-                        Client.sendCurrentPosition("pawnPane");
-                    }
+                Board.movePawn(pawnPane,selectedPane);
+                if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                        Client.sendCurrentPosition("pawnPane", Board.positionMoved);
                 }
             } else if (clickedWhiteKing) {
-                GameBoard.moveKing(kingPane,selectedPane);
-                if (LoginController.clientConnected == true){
-                    if (LoginController.clientConnected == true){
-                        Client.sendCurrentPosition("kingPane");
-                    }else {
-                        Client.sendCurrentPosition("kingPane");
-                    }
+                Board.moveKing(kingPane,selectedPane);
+                if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                    Client.sendCurrentPosition("kingPane", Board.positionMoved);
                 }
             }else if (clickedWhiteRook) {
-                GameBoard.moveRook(rookPane,selectedPane);
-                if (LoginController.clientConnected == true){
-                    if (LoginController.clientConnected == true){
-                        Client.sendCurrentPosition("rookPane");
-                    }else {
-                        Client.sendCurrentPosition("rookPane");
-                    }
+                Board.moveRook(rookPane,selectedPane);
+                if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                    Client.sendCurrentPosition("rookPane", Board.positionMoved);
                 }
             }else if (clickedWhiteQueen) {
-                GameBoard.moveQueen(queenPane,selectedPane);
-                if (LoginController.clientConnected == true){
-                    if (LoginController.clientConnected == true){
-                        Client.sendCurrentPosition("queenPane");
-                    }else {
-                        Client.sendCurrentPosition("queenPane");
-                    }
+                Board.moveQueen(queenPane,selectedPane);
+                if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                    Client.sendCurrentPosition("queenPane", Board.positionMoved);
                 }
             }else if (clickedWhiteBishoph) {
-                GameBoard.moveBishoph(bishophPane,selectedPane);
-                if (LoginController.clientConnected == true){
-                    if (LoginController.clientConnected == true){
-                        Client.sendCurrentPosition("bishophPane");
-                    }else {
-                        Client.sendCurrentPosition("bishophPane");
-                    }
+                Board.moveBishoph(bishophPane,selectedPane);
+                if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                    Client.sendCurrentPosition("bishophPane", Board.positionMoved);
                 }
             }else if (clickedWhiteKnight) {
-                GameBoard.moveKnight(knightPane,selectedPane);
-                if (LoginController.clientConnected == true){
-                    if (LoginController.clientConnected == true){
-                        Client.sendCurrentPosition("knightPane");
-                    }else {
-                        Client.sendCurrentPosition("knightPane");
-                    }
+                Board.moveKnight(knightPane,selectedPane);
+                if (LoginController.clientConnected == true && Board.somethingMoved == true){
+                    Client.sendCurrentPosition("knightPane", Board.positionMoved);
                 }
             } else {
                 System.out.println("No Piece selected!");
@@ -207,7 +201,7 @@ public class BoardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        GameBoard = new Board(boardId,cc);
+        //GameBoard = new Board(boardId,cc);
     }
 }
 
