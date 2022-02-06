@@ -3,6 +3,7 @@ package controller;
 import FunctionalClasses.Client;
 import Pieces.Board;
 import Pieces.ChessColor;
+import Pieces.ServerBoard;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
@@ -63,6 +64,12 @@ public class BoardController implements Initializable {
     public boolean clickedWhiteBishoph;
     public boolean clickedWhiteKnight;
     public boolean clickedWhiteRook;
+    public boolean clickedBlackPawn;
+    public boolean clickedBlackKing;
+    public boolean clickedBlackQueen;
+    public boolean clickedBlackBishoph;
+    public boolean clickedBlackKnight;
+    public boolean clickedBlackRook;
     public Node pawnPane;
     public Node kingPane;
     public Node bishophPane;
@@ -76,134 +83,262 @@ public class BoardController implements Initializable {
     public Pieces.Board gameBoard;
     public static Node selectedPane;
     public static String destinationID;
+    public static String serverOrClient;
 
 
     public void onMouseClick(MouseEvent mouseEvent) {
-        selectedPane = (Node) mouseEvent.getSource();
-        if (selectedPane.toString().contains("ImageView")) {
-            if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Pawn")) {
-                clickedWhitePawn = true;
-                clickedWhiteKing = false;
-                clickedWhiteKnight = false;
-                clickedWhiteBishoph = false;
-                clickedWhiteQueen = false;
-                clickedWhiteRook = false;
-                pawnPane = selectedPane;
-            } else if (selectedPane.getId().contains(Board.getOpposite())) {
+        if (serverOrClient.equals("Client")) {
+            selectedPane = (Node) mouseEvent.getSource();
+            if (selectedPane.toString().contains("ImageView")) {
+                if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Pawn")) {
+                    clickedWhitePawn = true;
+                    clickedWhiteKing = false;
+                    clickedWhiteKnight = false;
+                    clickedWhiteBishoph = false;
+                    clickedWhiteQueen = false;
+                    clickedWhiteRook = false;
+                    pawnPane = selectedPane;
+                } else if (selectedPane.getId().contains("black")) {
+                    if (clickedWhitePawn) {
+                        Board.killPawn(pawnPane, selectedPane);
+                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("pawnPane", Board.positionMoved, Board.id, destinationID);
+                        }
+                    } else if (clickedWhiteKing) {
+                        Board.attackKing(kingPane, selectedPane);
+                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("kingPane", Board.positionMoved, Board.id, destinationID);
+                        }
+                    } else if (clickedWhiteQueen) {
+                        Board.killQueen(queenPane, selectedPane);
+                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("queenPane", Board.positionMoved, Board.id, destinationID);
+                        }
+                    } else if (clickedWhiteKnight) {
+                        Board.killKnight(knightPane, selectedPane);
+                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("knightPane", Board.positionMoved, Board.id, destinationID);
+                        }
+                    } else if (clickedWhiteBishoph) {
+                        Board.killBishoph(bishophPane, selectedPane);
+                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("bishophPane", Board.positionMoved, Board.id, destinationID);
+                        }
+                    } else if (clickedWhiteRook) {
+                        Board.killRook(rookPane, selectedPane);
+                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("rookPane", Board.positionMoved, Board.id, destinationID);
+                        }
+                    } else {
+                        System.out.println("No Piece selected!");
+                    }
+                } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "King")) {
+                    clickedWhiteKing = true;
+                    clickedWhitePawn = false;
+                    clickedWhiteQueen = false;
+                    clickedWhiteBishoph = false;
+                    clickedWhiteKnight = false;
+                    clickedWhiteRook = false;
+                    kingPane = selectedPane;
+                } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Queen")) {
+                    clickedWhiteQueen = true;
+                    clickedWhiteKing = false;
+                    clickedWhitePawn = false;
+                    clickedWhiteBishoph = false;
+                    clickedWhiteKnight = false;
+                    clickedWhiteRook = false;
+                    queenPane = selectedPane;
+                } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Bishoph")) {
+                    clickedWhiteBishoph = true;
+                    clickedWhitePawn = false;
+                    clickedWhiteKing = false;
+                    clickedWhiteQueen = false;
+                    clickedWhiteKnight = false;
+                    clickedWhiteRook = false;
+                    bishophPane = selectedPane;
+                } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Knight")) {
+                    clickedWhiteKnight = true;
+                    clickedWhitePawn = false;
+                    clickedWhiteKing = false;
+                    clickedWhiteBishoph = false;
+                    clickedWhiteQueen = false;
+                    clickedWhiteRook = false;
+                    knightPane = selectedPane;
+                } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Rook")) {
+                    clickedWhiteRook = true;
+                    clickedWhitePawn = false;
+                    clickedWhiteKing = false;
+                    clickedWhiteBishoph = false;
+                    clickedWhiteQueen = false;
+                    clickedWhiteKnight = false;
+                    rookPane = selectedPane;
+                }
+            } else if (selectedPane.toString().contains("Rectangle")) {
                 if (clickedWhitePawn) {
-                    Board.killPawn(pawnPane,selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPositionKill("pawnPane", Board.positionMoved, Board.id, destinationID);
+                    Board.movePawn(pawnPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("pawnPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedWhiteKing) {
-                    Board.attackKing(kingPane,selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPositionKill("kingPane", Board.positionMoved, Board.id, destinationID);
+                    Board.moveKing(kingPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("kingPane", Board.positionMoved, Board.id);
                     }
-                } else if(clickedWhiteQueen){
-                    Board.killQueen(queenPane,selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPositionKill("queenPane", Board.positionMoved, Board.id, destinationID);
+                } else if (clickedWhiteRook) {
+                    Board.moveRook(rookPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("rookPane", Board.positionMoved, Board.id);
                     }
-                }else if(clickedWhiteKnight){
-                    Board.killKnight(knightPane,selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPositionKill("knightPane", Board.positionMoved, Board.id, destinationID);
+                } else if (clickedWhiteQueen) {
+                    Board.moveQueen(queenPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("queenPane", Board.positionMoved, Board.id);
                     }
-                }else if(clickedWhiteBishoph){
-                    Board.killBishoph(bishophPane,selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPositionKill("bishophPane", Board.positionMoved, Board.id, destinationID);
+                } else if (clickedWhiteBishoph) {
+                    Board.moveBishoph(bishophPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("bishophPane", Board.positionMoved, Board.id);
                     }
-                }else if(clickedWhiteRook){
-                    Board.killRook(rookPane,selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPositionKill("rookPane", Board.positionMoved, Board.id, destinationID);
+                } else if (clickedWhiteKnight) {
+                    Board.moveKnight(knightPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("knightPane", Board.positionMoved, Board.id);
                     }
-                }else{
+                } else {
                     System.out.println("No Piece selected!");
                 }
-            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "King")) {
-                clickedWhiteKing = true;
-                clickedWhitePawn = false;
-                clickedWhiteQueen = false;
-                clickedWhiteBishoph = false;
-                clickedWhiteKnight = false;
-                clickedWhiteRook = false;
-                kingPane = selectedPane;
-            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Queen")){
-                clickedWhiteQueen = true;
-                clickedWhiteKing = false;
-                clickedWhitePawn = false;
-                clickedWhiteBishoph = false;
-                clickedWhiteKnight = false;
-                clickedWhiteRook = false;
-                queenPane = selectedPane;
-            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Bishoph")){
-                clickedWhiteBishoph = true;
-                clickedWhitePawn = false;
-                clickedWhiteKing = false;
-                clickedWhiteQueen = false;
-                clickedWhiteKnight = false;
-                clickedWhiteRook = false;
-                bishophPane = selectedPane;
-            } else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Knight")){
-                clickedWhiteKnight = true;
-                clickedWhitePawn = false;
-                clickedWhiteKing = false;
-                clickedWhiteBishoph = false;
-                clickedWhiteQueen = false;
-                clickedWhiteRook = false;
-                knightPane = selectedPane;
-            }else if (selectedPane.getId().contains(cc.toString().toLowerCase(Locale.ROOT) + "Rook")){
-                clickedWhiteRook = true;
-                clickedWhitePawn = false;
-                clickedWhiteKing = false;
-                clickedWhiteBishoph = false;
-                clickedWhiteQueen = false;
-                clickedWhiteKnight = false;
-                rookPane = selectedPane;
-            }
-        } else if (selectedPane.toString().contains("Rectangle")) {
-            if (clickedWhitePawn) {
-                Board.movePawn(pawnPane,selectedPane);
-                if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                        Client.sendCurrentPosition("pawnPane", Board.positionMoved, Board.id);
-                }
-            } else if (clickedWhiteKing) {
-                Board.moveKing(kingPane,selectedPane);
-                if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                    Client.sendCurrentPosition("kingPane", Board.positionMoved, Board.id);
-                }
-            }else if (clickedWhiteRook) {
-                Board.moveRook(rookPane,selectedPane);
-                if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                    Client.sendCurrentPosition("rookPane", Board.positionMoved, Board.id);
-                }
-            }else if (clickedWhiteQueen) {
-                Board.moveQueen(queenPane,selectedPane);
-                if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                    Client.sendCurrentPosition("queenPane", Board.positionMoved, Board.id);
-                }
-            }else if (clickedWhiteBishoph) {
-                Board.moveBishoph(bishophPane,selectedPane);
-                if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                    Client.sendCurrentPosition("bishophPane", Board.positionMoved, Board.id);
-                }
-            }else if (clickedWhiteKnight) {
-                Board.moveKnight(knightPane,selectedPane);
-                if (LoginController.clientConnected == true && Board.somethingMoved == true){
-                    Client.sendCurrentPosition("knightPane", Board.positionMoved, Board.id);
-                }
-            } else {
-                System.out.println("No Piece selected!");
-            }
 
+            }
+        }else if(serverOrClient.equals("Server")){
+            cc = ChessColor.BLACK;
+            selectedPane = (Node) mouseEvent.getSource();
+            if (selectedPane.toString().contains("ImageView")) {
+                if (selectedPane.getId().contains("black"+ "Pawn")) {
+                    clickedBlackPawn = true;
+                    clickedBlackKing = false;
+                    clickedBlackKnight = false;
+                    clickedBlackBishoph = false;
+                    clickedBlackQueen = false;
+                    clickedBlackRook = false;
+                    pawnPane = selectedPane;
+                } else if (selectedPane.getId().contains("white")) {
+                    if (clickedBlackPawn) {
+                        ServerBoard.killPawn(pawnPane, selectedPane);
+                        if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("pawnPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                        }
+                    } else if (clickedBlackKing) {
+                        Board.attackKing(kingPane, selectedPane);
+                        if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("kingPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                        }
+                    } else if (clickedBlackQueen) {
+                        Board.killQueen(queenPane, selectedPane);
+                        if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("queenPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                        }
+                    } else if (clickedBlackKnight) {
+                        Board.killKnight(knightPane, selectedPane);
+                        if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("knightPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                        }
+                    } else if (clickedBlackBishoph) {
+                        Board.killBishoph(bishophPane, selectedPane);
+                        if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("bishophPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                        }
+                    } else if (clickedBlackRook) {
+                        Board.killRook(rookPane, selectedPane);
+                        if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
+                            Client.sendCurrentPositionKill("rookPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                        }
+                    } else {
+                        System.out.println("No Piece selected!");
+                    }
+                } else if (selectedPane.getId().contains("black" + "King")) {
+                    clickedBlackKing = true;
+                    clickedBlackPawn = false;
+                    clickedBlackQueen = false;
+                    clickedBlackBishoph = false;
+                    clickedBlackKnight = false;
+                    clickedBlackRook = false;
+                    kingPane = selectedPane;
+                } else if (selectedPane.getId().contains("black"+"Queen")) {
+                    clickedBlackQueen = true;
+                    clickedBlackKing = false;
+                    clickedBlackPawn = false;
+                    clickedBlackBishoph = false;
+                    clickedBlackKnight = false;
+                    clickedBlackRook = false;
+                    queenPane = selectedPane;
+                } else if (selectedPane.getId().contains("black"+ "Bishoph")) {
+                    clickedBlackBishoph = true;
+                    clickedBlackPawn = false;
+                    clickedBlackKing = false;
+                    clickedBlackQueen = false;
+                    clickedBlackKnight = false;
+                    clickedBlackRook = false;
+                    bishophPane = selectedPane;
+                } else if (selectedPane.getId().contains("black"+ "Knight")) {
+                    clickedBlackKnight = true;
+                    clickedBlackPawn = false;
+                    clickedBlackKing = false;
+                    clickedBlackBishoph = false;
+                    clickedBlackQueen = false;
+                    clickedBlackRook = false;
+                    knightPane = selectedPane;
+                } else if (selectedPane.getId().contains("black"+ "Rook")) {
+                    clickedBlackRook = true;
+                    clickedBlackPawn = false;
+                    clickedBlackKing = false;
+                    clickedBlackBishoph = false;
+                    clickedBlackQueen = false;
+                    clickedBlackKnight = false;
+                    rookPane = selectedPane;
+                }
+            } else if (selectedPane.toString().contains("Rectangle")) {
+                if (clickedBlackPawn) {
+                    ServerBoard.movePawn(pawnPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("pawnPane", Board.positionMoved, Board.id);
+                    }
+                } else if (clickedBlackKing) {
+                    Board.moveKing(kingPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("kingPane", Board.positionMoved, Board.id);
+                    }
+                } else if (clickedBlackRook) {
+                    Board.moveRook(rookPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("rookPane", Board.positionMoved, Board.id);
+                    }
+                } else if (clickedBlackQueen) {
+                    Board.moveQueen(queenPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("queenPane", Board.positionMoved, Board.id);
+                    }
+                } else if (clickedBlackBishoph) {
+                    Board.moveBishoph(bishophPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("bishophPane", Board.positionMoved, Board.id);
+                    }
+                } else if (clickedBlackKnight) {
+                    Board.moveKnight(knightPane, selectedPane);
+                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        Client.sendCurrentPosition("knightPane", Board.positionMoved, Board.id);
+                    }
+                } else {
+                    System.out.println("No Piece selected!");
+                }
+
+            }
+        }else{
+            System.out.println("error at Server or Client");
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        gameBoard = new Board(boardId,cc);
+        gameBoard = new Board(boardId, cc);
     }
 }

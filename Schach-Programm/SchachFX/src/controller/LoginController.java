@@ -7,6 +7,7 @@ import FunctionalClasses.Server;
 import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
+import Pieces.Board;
 import Pieces.ChessColor;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -105,6 +106,7 @@ public class LoginController implements Initializable {
         clientStage.show();
         clientConnected = true;
 
+        BoardController.serverOrClient = "Client";
         System.out.println("Before clientHasOpenedBoardView");
         client.clientHasOpenedBoardView(clientConnected);
         System.out.println("After clientHasOpenedBoardView");
@@ -123,10 +125,12 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        BoardController.serverOrClient = "Server";
         serverStage.setResizable(false);
         serverStage.setTitle("WaitingLounge");
         serverStage.setScene(scene);
         serverStage.show();
         boardCount++;
+
     }
 }

@@ -96,6 +96,7 @@ public class Server {
                                     serverStage.setTitle("ServerBoard");
                                     serverStage.setScene(scene);
                                     serverStage.show();
+                                    BoardController.serverOrClient = "Server";
                                 }
                             });
                         } else {
