@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 import javax.swing.text.html.ImageView;
 
 import java.awt.*;
+import java.util.Locale;
 
 import static controller.BoardController.whiteMovesID;
 
@@ -32,12 +33,12 @@ public class Board {
         for (Node node : gp.getChildren()) {
             if(node.toString().contains("ImageView")){
                 try {
-                    if(GridPane.getColumnIndex(node) == null){
-                        board[0][GridPane.getRowIndex(node)] = node;
+                    if(GridPane.getColumnIndex(node) == null && GridPane.getRowIndex(node) == null){
+                        board[0][0] = node;
                     }else if(GridPane.getRowIndex(node) == null){
                         board[GridPane.getColumnIndex(node)][0] = node;
-                    }else if(GridPane.getColumnIndex(node) == null && GridPane.getRowIndex(node) == null){
-                        board[0][0] = node;
+                    }else if(GridPane.getColumnIndex(node) == null){
+                        board[0][GridPane.getRowIndex(node)] = node;
                     }
                     else{
                         board[GridPane.getColumnIndex(node)][GridPane.getRowIndex(node)] = node;
@@ -51,8 +52,6 @@ public class Board {
     }
 
     public void moveRook(Node chesspiece, Node destination) {
-        //Hier geht der Rook(Turm) nach vorne/hinten und links/rechts
-        //Es wird nicht implementiert, dass der Turm jemanden schmeißt
         if (GridPane.getColumnIndex(destination) == null) {
             GridPane.setColumnIndex(destination, 0);
         } else if (GridPane.getRowIndex(destination) == null) {
@@ -62,8 +61,30 @@ public class Board {
         } else if (GridPane.getRowIndex(chesspiece) == null) {
             GridPane.setRowIndex(chesspiece, 0);
         }
+
+        boolean found = false;
+
         Node destiPlusI = chesspiece;
         boolean whiteInfront = false;
+
+        try{
+            if(GridPane.getRowIndex(destination).equals(GridPane.getRowIndex(chesspiece))){
+                for (int i = GridPane.getColumnIndex(chesspiece) - 1; i >= GridPane.getColumnIndex(destination); i--) {
+                    if(chessboard[GridPane.getColumnIndex(chesspiece) - i][GridPane.getRowIndex(chesspiece)] != null){
+                        System.out.println("Something in the way.");
+                        break;
+                    }else if((GridPane.getColumnIndex(chesspiece) - i) == GridPane.getColumnIndex(destination)){
+                        GridPane.setColumnIndex(chesspiece, i);
+                        GridPane.setRowIndex(chesspiece,GridPane.getRowIndex(chesspiece));
+                        chessboard[GridPane.getColumnIndex(destination)][GridPane.getRowIndex(destination)] = chesspiece;
+                        chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece)] = null;
+                        found = true;
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         try {
             if ((GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) - 2 == GridPane.getColumnIndex(chesspiece)) || (GridPane.getRowIndex(destination) - 1 == GridPane.getRowIndex(chesspiece) && GridPane.getColumnIndex(destination) + 2 == GridPane.getColumnIndex(chesspiece))) {
                 System.out.println("Der Turm ist kein Pferd");
@@ -76,11 +97,9 @@ public class Board {
                 if (GridPane.getColumnIndex(chesspiece) > GridPane.getColumnIndex(destination)) {
                     //links
                     for (int i = GridPane.getColumnIndex(chesspiece) - 1; i >= GridPane.getColumnIndex(destination); i--) {
+                            if(GridPane.getColumnIndex(chesspiece) - i == GridPane.getColumnIndex(destination)){
 
-                    }
-                    if (whiteInfront) {
-                        System.out.println("White Piecec can not be overtaken with Rook");
-                    } else {
+                            }
                         System.out.println(GridPane.getColumnIndex(destination) + " " + GridPane.getRowIndex(destination));
                         GridPane.setColumnIndex(chesspiece, GridPane.getColumnIndex(destination));
                         somethingMoved = true;
