@@ -1,17 +1,23 @@
 package controller;
 
 import FunctionalClasses.Client;
+import FunctionalClasses.Main;
 import FunctionalClasses.Server;
 import Pieces.Board;
 import Pieces.ChessColor;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -97,54 +103,42 @@ public class BoardController implements Initializable {
                     if (clickedWhitePawn) {
                         Board.killPawn(pawnPane, selectedPane);
                         if(Board.kingEaten) {
-                            if (LoginController.clientConnected && Board.somethingMoved) {
-                                Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
-                            }
-                        }else if (LoginController.clientConnected && Board.somethingMoved) {
+                            Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
+                        }else if (Board.somethingMoved) {
                             Client.sendCurrentPositionKill("pawnPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteKing) {
                         Board.attackKing(kingPane, selectedPane);
                         if(Board.kingEaten) {
-                            if (LoginController.clientConnected && Board.somethingMoved) {
-                                Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
-                            }
+                            Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
                         }else if (LoginController.clientConnected && Board.somethingMoved) {
                             Client.sendCurrentPositionKill("kingPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteQueen) {
                         Board.killQueen(queenPane, selectedPane);
                         if(Board.kingEaten) {
-                            if (LoginController.clientConnected && Board.somethingMoved) {
-                                Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
-                            }
+                            Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
                         }else if (LoginController.clientConnected && Board.somethingMoved) {
                             Client.sendCurrentPositionKill("queenPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteKnight) {
                         Board.killKnight(knightPane, selectedPane);
                         if(Board.kingEaten) {
-                            if (LoginController.clientConnected && Board.somethingMoved) {
-                                Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
-                            }
+                            Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
                         }else if (LoginController.clientConnected && Board.somethingMoved) {
                             Client.sendCurrentPositionKill("knightPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteBishoph) {
                         Board.killBishoph(bishophPane, selectedPane);
                         if(Board.kingEaten) {
-                            if (LoginController.clientConnected && Board.somethingMoved) {
-                                Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
-                            }
+                            Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
                         }else if (LoginController.clientConnected && Board.somethingMoved) {
                             Client.sendCurrentPositionKill("bishophPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteRook) {
                         Board.killRook(rookPane, selectedPane);
                         if(Board.kingEaten) {
-                            if (LoginController.clientConnected && Board.somethingMoved) {
-                                Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
-                            }
+                            Client.sendCurrentPositionKill("death", Board.positionMoved, Board.id, destinationID);
                         }else if (LoginController.clientConnected && Board.somethingMoved) {
                             Client.sendCurrentPositionKill("rookPane", Board.positionMoved, Board.id, destinationID);
                         }
@@ -246,6 +240,7 @@ public class BoardController implements Initializable {
                         Board.killBlackPawn(pawnPane, selectedPane);
                         if(Board.kingEaten) {
                                 Server.sendCurrentPositionKillS("death", Board.positionMoved, Board.id, destinationID);
+                            setSceneServer();
                         }else if (Board.somethingMoved == true) {
                             System.out.println("Before SendCurrentPosition");
                             Server.sendCurrentPositionKillS("pawnPane", Board.positionMoved, Board.id, destinationID);
@@ -255,6 +250,7 @@ public class BoardController implements Initializable {
                         Board.attackKing(kingPane, selectedPane);
                         if(Board.kingEaten) {
                             Server.sendCurrentPositionKillS("death", Board.positionMoved, Board.id, destinationID);
+                            setSceneServer();
                         }else if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("kingPane", Board.positionMoved, Board.id, destinationID);
                         }
@@ -262,6 +258,7 @@ public class BoardController implements Initializable {
                         Board.killQueen(queenPane, selectedPane);
                         if(Board.kingEaten) {
                             Server.sendCurrentPositionKillS("death", Board.positionMoved, Board.id, destinationID);
+                            setSceneServer();
                         }else if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("queenPane", Board.positionMoved, Board.id, destinationID);
                         }
@@ -270,6 +267,7 @@ public class BoardController implements Initializable {
                         if(Board.kingEaten) {
                             if (LoginController.clientConnected && Board.somethingMoved) {
                                 Server.sendCurrentPositionKillS("death", Board.positionMoved, Board.id, destinationID);
+                                setSceneServer();
                             }
                         }else if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("knightPane", Board.positionMoved, Board.id, destinationID);
@@ -278,6 +276,7 @@ public class BoardController implements Initializable {
                         Board.killBishoph(bishophPane, selectedPane);
                         if(Board.kingEaten) {
                             Server.sendCurrentPositionKillS("death", Board.positionMoved, Board.id, destinationID);
+                            setSceneServer();
                         }else if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("bishophPane", Board.positionMoved, Board.id, destinationID);
                         }
@@ -285,6 +284,7 @@ public class BoardController implements Initializable {
                         Board.killRook(rookPane, selectedPane);
                         if(Board.kingEaten) {
                             Server.sendCurrentPositionKillS("death", Board.positionMoved, Board.id, destinationID);
+                            setSceneServer();
                         }else if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("rookPane", Board.positionMoved, Board.id, destinationID);
                         }
@@ -369,6 +369,42 @@ public class BoardController implements Initializable {
                 }
             }
         }
+    }
+
+    public void setSceneServer(){
+        Platform.runLater(() -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/endingView.fxml"));
+            Stage stage = new Stage();
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.setResizable(false);
+            stage.setTitle("Ending");
+            stage.setScene(scene);
+            stage.show();
+            LoginController.serverStage.close();
+        });
+    }
+
+    public void setSceneClient(){
+        Platform.runLater(() -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/endingView.fxml"));
+            Stage stage = new Stage();
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stage.setResizable(false);
+            stage.setTitle("Ending");
+            stage.setScene(scene);
+            stage.show();
+            LoginController.clientStage.close();
+        });
     }
 
     @Override

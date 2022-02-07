@@ -79,15 +79,10 @@ public class Server {
                 String booleanTrue = "";
                 boolean r = true;
                 while (r == true) {
-                    //System.out.println("warten bis streamFromClient");
                     booleanTrue = positionAndPaneFromClient;
-                    //System.out.println("after booleanTrue = streamFromClient.readLine()");
                     if (booleanTrue != "") {
-                        /*System.out.println(booleanTrue);
-                        System.out.println("in if booleanTrue != ");*/
                         if (booleanTrue != "" && firstTimeOpening == 0) {
                             firstTimeOpening++;
-                            //System.out.println("in clientConnected = true");
                             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
                             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
                             Platform.runLater(new Runnable() {
@@ -107,7 +102,6 @@ public class Server {
                             if (killMaybe.equals("kill")) {
                                 System.out.println("kill");
                                 fromTo = streamFromClient.readLine();
-                                System.out.println(fromTo);
                                 pane = streamFromClient.readLine();
                                 if(pane.equals("death")){
                                     Platform.runLater(() -> {
@@ -123,10 +117,11 @@ public class Server {
                                         stage.setTitle("Ending");
                                         stage.setScene(scene);
                                         stage.show();
-                                        LoginController.clientStage.close();
+                                        LoginController.serverStage.close();
                                     });
                                 }
                                 System.out.println(pane);
+                                System.out.println(fromTo);
                                 position = streamFromClient.readLine();
                                 System.out.println(position);
                                 String[] columnRowArray = position.split(" ");

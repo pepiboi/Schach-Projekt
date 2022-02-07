@@ -91,6 +91,7 @@ public class Client {
                 streamToServer.println(id);
                 streamToServer.println(destination);
                 streamToServer.println(move);
+
                 System.out.println("Pane went through");
                 Board.somethingMoved = false;
                 running = false;
