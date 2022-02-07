@@ -224,43 +224,6 @@ public class Server {
                     }
                 }
 
-                /*if (booleanTrue.contains("boolean = true")){
-                    try {
-                        //System.out.println("in Readline boolean = true");
-                        clientSentToServerHeIsConnected = true;
-                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                Stage serverStage = LoginController.serverStage;
-                                serverStage.setResizable(false);
-                                serverStage.setTitle("ServerBoard");
-                                serverStage.setScene(scene);
-                                serverStage.show();
-                            }
-                        });
-
-                    }catch (IllegalStateException ise){
-                        ise.printStackTrace();
-                    }
-                }*/
-
-                /*if (LoginController.clientConnected == true){
-                    System.out.println("in clientConnected = true");
-                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
-                    Scene scene = null;
-                    try {
-                        scene = new Scene(fxmlLoader.load(), 1177, 1007);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    LoginController.stage.setResizable(false);
-                    LoginController.stage.setTitle("Board");
-                    LoginController.stage.setScene(scene);
-                    LoginController.stage.show();
-                }*/
-
             }
         } catch (Exception e) {
             e.printStackTrace();
