@@ -1,6 +1,7 @@
 package FunctionalClasses;
 
 import Pieces.Board;
+import controller.BoardController;
 import controller.LoginController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Client {
     static PrintStream streamToServer;
@@ -25,8 +27,8 @@ public class Client {
     ServerSocket serverSocket;
     PrintStream streamToClient;
     Socket clientSocket;
-    int count = 0;
-    String positionAndPaneFromClient;
+    public static int count = 0;
+    public static String positionAndPaneFromClient;
     String clientConnectionNameOne;
     //public static boolean clientSentToServerHeIsConnected = false;
     public static String pane;
@@ -36,14 +38,16 @@ public class Client {
     public static String pieceID;
     public static boolean pieceUebergeben = false;
     public static String desti;
+    static boolean move;
+    public static boolean moveServer;
 
     public Client() {
         connectionToServer();
     }
 
-    private void connectionToServer() {
+    public void connectionToServer() {
+        String name;
         try {
-            String name;
             toServer = new Socket(LoginController.ipClient, 1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
             streamToServer = new PrintStream(toServer.getOutputStream(), true);
@@ -56,11 +60,13 @@ public class Client {
             streamToServer.println(name);
             String str = streamFromServer.readLine();
             System.out.println("The Server Says " + str);
+            count++;
 
-
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
+            reseaveFromServer();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
     public static void sendCurrentPosition(String witchPane, String position, String id) {
@@ -72,11 +78,13 @@ public class Client {
                 streamToServer.println(witchPane);
                 streamToServer.println(position);
                 streamToServer.println(id);
+                streamToServer.println(move);
                 //System.out.println(destination);
                 System.out.println("Pane went through");
                 Board.somethingMoved = false;
                 running = false;
                 System.out.println("Running at sending Position set to false");
+                move = true;
             }
         }
     }
@@ -92,11 +100,12 @@ public class Client {
                 streamToServer.println(position);
                 streamToServer.println(id);
                 streamToServer.println(destination);
-
+                streamToServer.println(move);
                 System.out.println("Pane went through");
                 Board.somethingMoved = false;
                 running = false;
                 System.out.println("Running at sending Position set to false");
+                move = true;
             }
         }
     }
@@ -116,35 +125,39 @@ public class Client {
 
     public static void reseaveFromServer() {
         try {
-            String booleanTrue = "";
-            boolean r = true;
-            while (r == true) {
-                //System.out.println("warten bis streamFromClient");
-                //System.out.println("after booleanTrue = streamFromClient.readLine()");
-                if (booleanTrue != "") {
-                    //System.out.println(booleanTrue);
-                    System.out.println("in if booleanTrue != ");
+            while (true) {
+                String booleanTrue = "";
+                boolean r = true;
+                while (r == true) {
+                    System.out.println("warten bis streamFromServer");
+                    booleanTrue = streamFromServer.readLine();
+                    System.out.println(booleanTrue);
+                    System.out.println("after booleanTrue = streamFromServer.readLine()");
+                    String killMaybe = "";
 
-                    String killMaybe = streamFromClient.readLine();
+                    killMaybe = streamFromServer.readLine();
+                    System.out.println(killMaybe);
+
+
                     if (killMaybe.equals("kill")) {
                         System.out.println("kill");
-                        fromTo = streamFromClient.readLine();
+                        fromTo = streamFromServer.readLine();
                         System.out.println(fromTo);
-                        pane = streamFromClient.readLine();
+                        pane = streamFromServer.readLine();
                         System.out.println(pane);
-                        position = streamFromClient.readLine();
+                        position = streamFromServer.readLine();
                         System.out.println(position);
                         String[] columnRowArray = position.split(" ");
                         int column = Integer.parseInt(columnRowArray[0]);
                         int row = Integer.parseInt(columnRowArray[1]);
                         System.out.println(column + " " + row + " Parse completed");
 
-                        pieceID = streamFromClient.readLine();
+                        pieceID = streamFromServer.readLine();
                         //NumberFormat
                         System.out.println(pieceID);
-                        desti = streamFromClient.readLine();
+                        desti = streamFromServer.readLine();
                         System.out.println(desti);
-
+                        moveServer = Boolean.parseBoolean(streamFromServer.readLine());
                         //set Pieces auf sache
                         Node pieceNode = null;
                         for (Node node : Board.gp.getChildren()) {
@@ -176,11 +189,11 @@ public class Client {
                             pieceUebergeben = false;
                             nodeSet = false;
                         } else if (nodeSet == true) {
-                            //GridPane.setColumnIndex(pieceNode, column);
-                            GridPane.setRowIndex(pieceNode, row);
-                            System.out.println("Node set to: " + column + " " + row);
-                            pieceUebergeben = false;
-                            nodeSet = false;
+                                    /*GridPane.setColumnIndex(pieceNode, column);
+                                    GridPane.setRowIndex(pieceNode, row);
+                                    System.out.println("Node set to: " + column + " " + row);
+                                    pieceUebergeben = false;
+                                    nodeSet = false;*/
                             //Nullpointer
                             destiNode.setVisible(false);
                             GridPane.setColumnIndex(pieceNode, column);
@@ -188,27 +201,28 @@ public class Client {
                             System.out.println("Node set to: " + column + " " + row);
                             pieceUebergeben = false;
                             nodeSet = false;
-
+                            moveServer = false;
                         } else {
                             System.out.println("ID wurde nicht gefunden! --> Node set false");
                             pieceUebergeben = false;
                             nodeSet = false;
                         }
-                    } else {
+                    } else if (r != false) {
                         fromTo = killMaybe.toString();
                         System.out.println(fromTo);
-                        pane = streamFromClient.readLine();
+                        pane = streamFromServer.readLine();
                         System.out.println(pane);
-                        position = streamFromClient.readLine();
+                        position = streamFromServer.readLine();
                         System.out.println(position);
                         String[] columnRowArray = position.split(" ");
                         int column = Integer.parseInt(columnRowArray[0]);
                         int row = Integer.parseInt(columnRowArray[1]);
                         System.out.println(column + " " + row + " Parse completed");
 
-                        pieceID = streamFromClient.readLine();
+                        pieceID = streamFromServer.readLine();
                         //NumberFormat
                         System.out.println(pieceID);
+                        moveServer = Boolean.parseBoolean(streamFromServer.readLine());
                         //set Pieces auf sache
                         Node pieceNode = null;
                         for (Node node : Board.gp.getChildren()) {
@@ -232,23 +246,22 @@ public class Client {
                             System.out.println("Node set to: " + column + " " + row);
                             pieceUebergeben = false;
                             nodeSet = false;
+                            moveServer = false;
                         } else {
                             System.out.println("ID wurde nicht gefunden! --> Node set false");
                             pieceUebergeben = false;
                             nodeSet = false;
                         }
 
-                    }
 
+                    }
                     r = false;
                 }
             }
-        } catch (Exception e) {
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        //new Client();
     }
 }

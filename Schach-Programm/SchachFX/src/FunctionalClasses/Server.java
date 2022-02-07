@@ -21,7 +21,7 @@ import java.net.Socket;
 
 public class Server {
     ServerSocket serverSocket;
-    PrintStream streamToClient;
+    public static PrintStream streamToClient;
     BufferedReader streamFromClient;
     Socket clientSocket;
     int count = 0;
@@ -36,6 +36,8 @@ public class Server {
     public static boolean pieceUebergeben = false;
     private boolean nodeSet = false;
     public static String desti;
+    static boolean move;
+    public static boolean moveClient;
 
     public Server() {
         try {
@@ -97,6 +99,7 @@ public class Server {
                                     serverStage.setScene(scene);
                                     serverStage.show();
                                     BoardController.serverOrClient = "Server";
+                                    System.out.println("BoardView geoeffnet");
                                 }
                             });
                         } else {
@@ -119,7 +122,7 @@ public class Server {
                                 System.out.println(pieceID);
                                 desti = streamFromClient.readLine();
                                 System.out.println(desti);
-
+                                moveClient = Boolean.parseBoolean(streamFromClient.readLine());
                                 //set Pieces auf sache
                                 Node pieceNode = null;
                                 for (Node node : Board.gp.getChildren()) {
@@ -163,7 +166,7 @@ public class Server {
                                     System.out.println("Node set to: " + column + " " + row);
                                     pieceUebergeben = false;
                                     nodeSet = false;
-
+                                    moveClient = false;
                                 } else {
                                     System.out.println("ID wurde nicht gefunden! --> Node set false");
                                     pieceUebergeben = false;
@@ -184,6 +187,7 @@ public class Server {
                                 pieceID = streamFromClient.readLine();
                                 //NumberFormat
                                 System.out.println(pieceID);
+                                moveClient = Boolean.parseBoolean(streamFromClient.readLine());
                                 //set Pieces auf sache
                                 Node pieceNode = null;
                                 for (Node node : Board.gp.getChildren()) {
@@ -207,6 +211,7 @@ public class Server {
                                     System.out.println("Node set to: " + column + " " + row);
                                     pieceUebergeben = false;
                                     nodeSet = false;
+                                    moveClient = false;
                                 } else {
                                     System.out.println("ID wurde nicht gefunden! --> Node set false");
                                     pieceUebergeben = false;
@@ -264,6 +269,48 @@ public class Server {
                 clientSocket.close();
             } catch (Exception e) {
                 System.out.println("Server could not be closed");
+            }
+        }
+    }
+
+    public static void sendCurrentPositionS(String witchPane, String position, String id) {
+        boolean running = true;
+        while (running) {
+            if (Board.somethingMoved == true) {
+                System.out.println(Board.movedNodeToString);
+                streamToClient.println(Board.movedNodeToString);
+                streamToClient.println(witchPane);
+                streamToClient.println(position);
+                streamToClient.println(id);
+                streamToClient.println(move);
+                //System.out.println(destination);
+                System.out.println("Pane went through");
+                Board.somethingMoved = false;
+                running = false;
+                System.out.println("Running at sending Position set to false");
+                move = true;
+            }
+        }
+    }
+
+    public static void sendCurrentPositionKillS(String witchPane, String position, String id, String destination) {
+        boolean running = true;
+        while (running) {
+            if (Board.somethingMoved == true) {
+                System.out.println(Board.movedNodeToString);
+                streamToClient.println("kill");
+                streamToClient.println(Board.movedNodeToString);
+                streamToClient.println(witchPane);
+                streamToClient.println(position);
+                streamToClient.println(id);
+                streamToClient.println(destination);
+                streamToClient.println(move);
+
+                System.out.println("Pane went through");
+                Board.somethingMoved = false;
+                running = false;
+                System.out.println("Running at sending Position set to false");
+                move = true;
             }
         }
     }

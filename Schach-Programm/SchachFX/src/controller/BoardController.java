@@ -1,6 +1,7 @@
 package controller;
 
 import FunctionalClasses.Client;
+import FunctionalClasses.Server;
 import Pieces.Board;
 import Pieces.ChessColor;
 import Pieces.ServerBoard;
@@ -225,32 +226,32 @@ public class BoardController implements Initializable {
                     if (clickedBlackPawn) {
                         ServerBoard.killPawn(pawnPane, selectedPane);
                         if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
-                            Client.sendCurrentPositionKill("pawnPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                            Server.sendCurrentPositionKillS("pawnPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
                         }
                     } else if (clickedBlackKing) {
                         Board.attackKing(kingPane, selectedPane);
                         if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
-                            Client.sendCurrentPositionKill("kingPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                            Server.sendCurrentPositionKillS("kingPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
                         }
                     } else if (clickedBlackQueen) {
                         Board.killQueen(queenPane, selectedPane);
                         if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
-                            Client.sendCurrentPositionKill("queenPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                            Server.sendCurrentPositionKillS("queenPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
                         }
                     } else if (clickedBlackKnight) {
                         Board.killKnight(knightPane, selectedPane);
                         if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
-                            Client.sendCurrentPositionKill("knightPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                            Server.sendCurrentPositionKillS("knightPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
                         }
                     } else if (clickedBlackBishoph) {
                         Board.killBishoph(bishophPane, selectedPane);
                         if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
-                            Client.sendCurrentPositionKill("bishophPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                            Server.sendCurrentPositionKillS("bishophPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
                         }
                     } else if (clickedBlackRook) {
                         Board.killRook(rookPane, selectedPane);
                         if (LoginController.clientConnected == true && ServerBoard.somethingMoved == true) {
-                            Client.sendCurrentPositionKill("rookPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
+                            Server.sendCurrentPositionKillS("rookPane", ServerBoard.positionMoved, ServerBoard.id, destinationID);
                         }
                     } else {
                         System.out.println("No Piece selected!");
@@ -300,32 +301,32 @@ public class BoardController implements Initializable {
                 if (clickedBlackPawn) {
                     ServerBoard.movePawn(pawnPane, selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true) {
-                        Client.sendCurrentPosition("pawnPane", Board.positionMoved, Board.id);
+                        Server.sendCurrentPositionS("pawnPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedBlackKing) {
                     Board.moveKing(kingPane, selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true) {
-                        Client.sendCurrentPosition("kingPane", Board.positionMoved, Board.id);
+                        Server.sendCurrentPositionS("kingPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedBlackRook) {
                     Board.moveRook(rookPane, selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true) {
-                        Client.sendCurrentPosition("rookPane", Board.positionMoved, Board.id);
+                        Server.sendCurrentPositionS("rookPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedBlackQueen) {
                     Board.moveQueen(queenPane, selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true) {
-                        Client.sendCurrentPosition("queenPane", Board.positionMoved, Board.id);
+                        Server.sendCurrentPositionS("queenPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedBlackBishoph) {
                     Board.moveBishoph(bishophPane, selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true) {
-                        Client.sendCurrentPosition("bishophPane", Board.positionMoved, Board.id);
+                        Server.sendCurrentPositionS("bishophPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedBlackKnight) {
                     Board.moveKnight(knightPane, selectedPane);
                     if (LoginController.clientConnected == true && Board.somethingMoved == true) {
-                        Client.sendCurrentPosition("knightPane", Board.positionMoved, Board.id);
+                        Server.sendCurrentPositionS("knightPane", Board.positionMoved, Board.id);
                     }
                 } else {
                     System.out.println("No Piece selected!");

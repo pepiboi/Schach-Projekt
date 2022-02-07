@@ -1,9 +1,6 @@
 package controller;
 
-import FunctionalClasses.Client;
-import FunctionalClasses.Main;
-import FunctionalClasses.MyServerThread;
-import FunctionalClasses.Server;
+import FunctionalClasses.*;
 import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
@@ -90,8 +87,11 @@ public class LoginController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
         System.out.println("Before Client");
-        Client client = new Client();
+        MyClientThread mst = new MyClientThread();
+        Thread t = new Thread(mst);
+        t.start();
         System.out.println("After Client");
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
         Scene scene = null;
@@ -108,9 +108,8 @@ public class LoginController implements Initializable {
 
         BoardController.serverOrClient = "Client";
         System.out.println("Before clientHasOpenedBoardView");
-        client.clientHasOpenedBoardView(clientConnected);
+        Client.clientHasOpenedBoardView(clientConnected);
         System.out.println("After clientHasOpenedBoardView");
-
     }
 
     public void onStartServer(MouseEvent mouseEvent) {
