@@ -130,12 +130,10 @@ public class Client {
                 boolean r = true;
                 while (r == true) {
                     System.out.println("warten bis streamFromServer");
-                    booleanTrue = streamFromServer.readLine();
-                    System.out.println(booleanTrue);
-                    System.out.println("after booleanTrue = streamFromServer.readLine()");
                     String killMaybe = "";
 
                     killMaybe = streamFromServer.readLine();
+                    System.out.println("Before Kill");
                     System.out.println(killMaybe);
 
 
@@ -207,7 +205,7 @@ public class Client {
                             pieceUebergeben = false;
                             nodeSet = false;
                         }
-                    } else if (r != false) {
+                    } else {
                         fromTo = killMaybe.toString();
                         System.out.println(fromTo);
                         pane = streamFromServer.readLine();
@@ -252,8 +250,6 @@ public class Client {
                             pieceUebergeben = false;
                             nodeSet = false;
                         }
-
-
                     }
                     r = false;
                 }

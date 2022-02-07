@@ -220,32 +220,34 @@ public class BoardController implements Initializable {
                 } else if (selectedPane.getId().contains("white")) {
                     if (clickedBlackPawn) {
                         Board.killPawn(pawnPane, selectedPane);
-                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        if (Board.somethingMoved == true) {
+                            System.out.println("Before SendCurrentPosition");
                             Server.sendCurrentPositionKillS("pawnPane", Board.positionMoved, Board.id, destinationID);
+                            System.out.println("After SendCurrentPosition");
                         }
                     } else if (clickedWhiteKing) {
                         Board.attackKing(kingPane, selectedPane);
-                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("kingPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteQueen) {
                         Board.killQueen(queenPane, selectedPane);
-                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("queenPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteKnight) {
                         Board.killKnight(knightPane, selectedPane);
-                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("knightPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteBishoph) {
                         Board.killBishoph(bishophPane, selectedPane);
-                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("bishophPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else if (clickedWhiteRook) {
                         Board.killRook(rookPane, selectedPane);
-                        if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                        if (Board.somethingMoved == true) {
                             Server.sendCurrentPositionKillS("rookPane", Board.positionMoved, Board.id, destinationID);
                         }
                     } else {
@@ -295,32 +297,33 @@ public class BoardController implements Initializable {
             } else if (selectedPane.toString().contains("Rectangle")) {
                 if (clickedWhitePawn) {
                     Board.moveBlackPawn(pawnPane, selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                    if (Board.somethingMoved == true) {
+                        System.out.println("SendCurrentPosition");
                         Server.sendCurrentPositionS("pawnPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedWhiteKing) {
                     Board.moveKing(kingPane, selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                    if (Board.somethingMoved == true) {
                         Server.sendCurrentPositionS("kingPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedWhiteRook) {
                     Board.moveRook(rookPane, selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                    if (Board.somethingMoved == true) {
                         Server.sendCurrentPositionS("rookPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedWhiteQueen) {
                     Board.moveQueen(queenPane, selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                    if (Board.somethingMoved == true) {
                         Server.sendCurrentPositionS("queenPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedWhiteBishoph) {
                     Board.moveBishoph(bishophPane, selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                    if (Board.somethingMoved == true) {
                         Server.sendCurrentPositionS("bishophPane", Board.positionMoved, Board.id);
                     }
                 } else if (clickedWhiteKnight) {
                     Board.moveKnight(knightPane, selectedPane);
-                    if (LoginController.clientConnected == true && Board.somethingMoved == true) {
+                    if (Board.somethingMoved == true) {
                         Server.sendCurrentPositionS("knightPane", Board.positionMoved, Board.id);
                     }
                 } else {
