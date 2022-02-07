@@ -21,7 +21,7 @@ import java.net.Socket;
 
 public class Server {
     ServerSocket serverSocket;
-    PrintStream streamToClient;
+    public static PrintStream streamToClient;
     BufferedReader streamFromClient;
     Socket clientSocket;
     int count = 0;
@@ -36,12 +36,12 @@ public class Server {
     public static boolean pieceUebergeben = false;
     private boolean nodeSet = false;
     public static String desti;
+    static boolean move;
+    public static boolean moveClient;
 
     public Server() {
         try {
             serverSocket = new ServerSocket(1234);
-
-
         } catch (IOException e) {
             System.out.println("Serversocket creating failed");
         }
@@ -79,15 +79,10 @@ public class Server {
                 String booleanTrue = "";
                 boolean r = true;
                 while (r == true) {
-                    //System.out.println("warten bis streamFromClient");
                     booleanTrue = positionAndPaneFromClient;
-                    //System.out.println("after booleanTrue = streamFromClient.readLine()");
                     if (booleanTrue != "") {
-                        /*System.out.println(booleanTrue);
-                        System.out.println("in if booleanTrue != ");*/
                         if (booleanTrue != "" && firstTimeOpening == 0) {
                             firstTimeOpening++;
-                            //System.out.println("in clientConnected = true");
                             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
                             Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
                             Platform.runLater(new Runnable() {
@@ -98,6 +93,8 @@ public class Server {
                                     serverStage.setTitle("ServerBoard");
                                     serverStage.setScene(scene);
                                     serverStage.show();
+                                    BoardController.serverOrClient = "Server";
+                                    System.out.println("BoardView geoeffnet");
                                 }
                             });
                         } else {
@@ -105,9 +102,26 @@ public class Server {
                             if (killMaybe.equals("kill")) {
                                 System.out.println("kill");
                                 fromTo = streamFromClient.readLine();
-                                System.out.println(fromTo);
                                 pane = streamFromClient.readLine();
+                                if(pane.equals("death")){
+                                    Platform.runLater(() -> {
+                                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/endingViewLoser.fxml"));
+                                        Stage stage = new Stage();
+                                        Scene scene = null;
+                                        try {
+                                            scene = new Scene(fxmlLoader.load());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        stage.setResizable(false);
+                                        stage.setTitle("Ending");
+                                        stage.setScene(scene);
+                                        stage.show();
+                                        LoginController.serverStage.close();
+                                    });
+                                }
                                 System.out.println(pane);
+                                System.out.println(fromTo);
                                 position = streamFromClient.readLine();
                                 System.out.println(position);
                                 String[] columnRowArray = position.split(" ");
@@ -120,7 +134,7 @@ public class Server {
                                 System.out.println(pieceID);
                                 desti = streamFromClient.readLine();
                                 System.out.println(desti);
-
+                                moveClient = Boolean.parseBoolean(streamFromClient.readLine());
                                 //set Pieces auf sache
                                 Node pieceNode = null;
                                 for (Node node : Board.gp.getChildren()) {
@@ -164,13 +178,13 @@ public class Server {
                                     System.out.println("Node set to: " + column + " " + row);
                                     pieceUebergeben = false;
                                     nodeSet = false;
-
+                                    moveClient = false;
                                 } else {
                                     System.out.println("ID wurde nicht gefunden! --> Node set false");
                                     pieceUebergeben = false;
                                     nodeSet = false;
                                 }
-                            } else {
+                            }else {
                                 fromTo = killMaybe.toString();
                                 System.out.println(fromTo);
                                 pane = streamFromClient.readLine();
@@ -185,6 +199,7 @@ public class Server {
                                 pieceID = streamFromClient.readLine();
                                 //NumberFormat
                                 System.out.println(pieceID);
+                                moveClient = Boolean.parseBoolean(streamFromClient.readLine());
                                 //set Pieces auf sache
                                 Node pieceNode = null;
                                 for (Node node : Board.gp.getChildren()) {
@@ -208,6 +223,7 @@ public class Server {
                                     System.out.println("Node set to: " + column + " " + row);
                                     pieceUebergeben = false;
                                     nodeSet = false;
+                                    moveClient = false;
                                 } else {
                                     System.out.println("ID wurde nicht gefunden! --> Node set false");
                                     pieceUebergeben = false;
@@ -219,43 +235,6 @@ public class Server {
                         r = false;
                     }
                 }
-
-                /*if (booleanTrue.contains("boolean = true")){
-                    try {
-                        //System.out.println("in Readline boolean = true");
-                        clientSentToServerHeIsConnected = true;
-                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                Stage serverStage = LoginController.serverStage;
-                                serverStage.setResizable(false);
-                                serverStage.setTitle("ServerBoard");
-                                serverStage.setScene(scene);
-                                serverStage.show();
-                            }
-                        });
-
-                    }catch (IllegalStateException ise){
-                        ise.printStackTrace();
-                    }
-                }*/
-
-                /*if (LoginController.clientConnected == true){
-                    System.out.println("in clientConnected = true");
-                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("boardView.fxml"));
-                    Scene scene = null;
-                    try {
-                        scene = new Scene(fxmlLoader.load(), 1177, 1007);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    LoginController.stage.setResizable(false);
-                    LoginController.stage.setTitle("Board");
-                    LoginController.stage.setScene(scene);
-                    LoginController.stage.show();
-                }*/
 
             }
         } catch (Exception e) {
@@ -269,37 +248,44 @@ public class Server {
         }
     }
 
-    /*public static String parseID(String fromTo) {
-
-        StringBuilder id = new StringBuilder();
-        try {
-            String[] parseArray = fromTo.split("=");
-            System.out.println("parse = ");
-            String parseComma = parseArray[1];
-            String[] parseCommaArray = parseComma.split(",");
-            System.out.println("parse ,");
-            String idString = parseCommaArray[0];
-            char[] idCharArray = idString.toCharArray();
-            for (int i = 0; i < idCharArray.length; i++) {
-                id.append(idCharArray[i]);
-                System.out.print(idCharArray[i]);
+    public static void sendCurrentPositionS(String witchPane, String position, String id) {
+        boolean running = true;
+        while (running) {
+            if (Board.somethingMoved == true) {
+                System.out.println(Board.movedNodeToString);
+                streamToClient.println(Board.movedNodeToString);
+                streamToClient.println(witchPane);
+                streamToClient.println(position);
+                streamToClient.println(id);
+                streamToClient.println(move);
+                System.out.println("Pane went through");
+                Board.somethingMoved = false;
+                running = false;
+                System.out.println("Running at sending Position set to false");
+                move = true;
             }
-        *//*String[] parseArray = fromTo.split(" ");
-        if (parseArray[1].contains("ImageView")){
-            String[] parseEquals = parseArray[1].split("=");
-            char[] idCharArray = parseEquals[1].toCharArray();
-            for (int i = 0; i < idCharArray.length-1; i++) {
-                id += idCharArray[i];
-            }
-        }*//*
-        } catch (IndexOutOfBoundsException ioobe) {
-            System.out.println("IndexOutOfBoundsException");
         }
-        return id.toString();
-    }*/
+    }
 
-    /*public static void main(String[] args) {
-     *//*Server server = new Server();
-        server.connect();*//*
-    }*/
+    public static void sendCurrentPositionKillS(String witchPane, String position, String id, String destination) {
+        boolean running = true;
+        while (running) {
+            if (Board.somethingMoved == true) {
+                System.out.println(Board.movedNodeToString);
+                streamToClient.println("kill");
+                streamToClient.println(Board.movedNodeToString);
+                streamToClient.println(witchPane);
+                streamToClient.println(position);
+                streamToClient.println(id);
+                streamToClient.println(destination);
+                streamToClient.println(move);
+
+                System.out.println("Pane went through");
+                Board.somethingMoved = false;
+                running = false;
+                System.out.println("Running at sending Position set to false");
+                move = true;
+            }
+        }
+    }
 }

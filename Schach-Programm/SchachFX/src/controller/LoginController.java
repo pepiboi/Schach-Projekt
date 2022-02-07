@@ -1,12 +1,10 @@
 package controller;
 
-import FunctionalClasses.Client;
-import FunctionalClasses.Main;
-import FunctionalClasses.MyServerThread;
-import FunctionalClasses.Server;
+import FunctionalClasses.*;
 import FunctionalClasses.Client;
 import FunctionalClasses.Main;
 import FunctionalClasses.Server;
+import Pieces.Board;
 import Pieces.ChessColor;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,8 +32,8 @@ public class LoginController implements Initializable {
     public static boolean clientConnected = false;
 
     public LoginController(Stage primaryStage) {
-        this.serverStage = primaryStage;
-        this.clientStage = primaryStage;
+        serverStage = primaryStage;
+        clientStage = primaryStage;
         boardCount = 0;
     }
 
@@ -89,8 +87,11 @@ public class LoginController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("boardView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1177, 1007);*/
         System.out.println("Before Client");
-        Client client = new Client();
+        MyClientThread mst = new MyClientThread();
+        Thread t = new Thread(mst);
+        t.start();
         System.out.println("After Client");
+
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/boardView.fxml"));
         Scene scene = null;
@@ -105,10 +106,10 @@ public class LoginController implements Initializable {
         clientStage.show();
         clientConnected = true;
 
+        BoardController.serverOrClient = "Client";
         System.out.println("Before clientHasOpenedBoardView");
-        client.clientHasOpenedBoardView(clientConnected);
+        Client.clientHasOpenedBoardView(clientConnected);
         System.out.println("After clientHasOpenedBoardView");
-
     }
 
     public void onStartServer(MouseEvent mouseEvent) {
@@ -123,10 +124,12 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        BoardController.serverOrClient = "Server";
         serverStage.setResizable(false);
         serverStage.setTitle("WaitingLounge");
         serverStage.setScene(scene);
         serverStage.show();
         boardCount++;
+
     }
 }
