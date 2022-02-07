@@ -3,9 +3,11 @@ package FunctionalClasses;
 import Pieces.Board;
 import controller.BoardController;
 import controller.LoginController;
+import controller.endingViewController;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -23,23 +25,16 @@ public class Client {
     static BufferedReader streamFromServer;
     static Socket toServer;
     private static boolean nodeSet;
-    private static BufferedReader streamFromClient;
-    ServerSocket serverSocket;
-    PrintStream streamToClient;
-    Socket clientSocket;
     public static int count = 0;
-    public static String positionAndPaneFromClient;
-    String clientConnectionNameOne;
-    //public static boolean clientSentToServerHeIsConnected = false;
     public static String pane;
     public static String position;
     public static String fromTo;
-    private int firstTimeOpening = 0;
     public static String pieceID;
     public static boolean pieceUebergeben = false;
     public static String desti;
     static boolean move;
     public static boolean moveServer;
+    public static Stage ending;
 
     public Client() {
         connectionToServer();
@@ -51,17 +46,12 @@ public class Client {
             toServer = new Socket(LoginController.ipClient, 1234);
             streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
             streamToServer = new PrintStream(toServer.getOutputStream(), true);
-            System.out.println("Enter Connection Name");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            //name = reader.readLine();
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(LoginController.ipClient.getBytes())));
             name = toServer.getRemoteSocketAddress().toString();
-            //name = LoginController.ipAddressID.toString();
             streamToServer.println(name);
             String str = streamFromServer.readLine();
             System.out.println("The Server Says " + str);
             count++;
-
             reseaveFromServer();
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,9 +102,6 @@ public class Client {
 
     public static void clientHasOpenedBoardView(boolean isConnected) {
         if (isConnected == true) {
-                /*toServer = new Socket(LoginController.ipClient,1234);
-                streamFromServer = new BufferedReader(new InputStreamReader((toServer.getInputStream())));
-                streamToServer = new PrintStream(toServer.getOutputStream(), true);*/
             streamToServer.println("boolean = " + isConnected);
             System.out.println("boolean = " + isConnected);
 
@@ -128,7 +115,7 @@ public class Client {
             while (true) {
                 String booleanTrue = "";
                 boolean r = true;
-                while (r == true) {
+                while (r) {
                     System.out.println("warten bis streamFromServer");
                     String killMaybe = "";
 
@@ -142,6 +129,23 @@ public class Client {
                         fromTo = streamFromServer.readLine();
                         System.out.println(fromTo);
                         pane = streamFromServer.readLine();
+                        if(pane.equals("death")){
+                            Platform.runLater(() -> {
+                                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/endingViewLoser.fxml"));
+                                Stage stage = new Stage();
+                                Scene scene = null;
+                                try {
+                                    scene = new Scene(fxmlLoader.load());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                stage.setResizable(false);
+                                stage.setTitle("Ending");
+                                stage.setScene(scene);
+                                stage.show();
+                                LoginController.clientStage.close();
+                            });
+                        }
                         System.out.println(pane);
                         position = streamFromServer.readLine();
                         System.out.println(position);

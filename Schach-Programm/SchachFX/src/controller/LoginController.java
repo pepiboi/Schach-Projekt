@@ -32,8 +32,8 @@ public class LoginController implements Initializable {
     public static boolean clientConnected = false;
 
     public LoginController(Stage primaryStage) {
-        this.serverStage = primaryStage;
-        this.clientStage = primaryStage;
+        serverStage = primaryStage;
+        clientStage = primaryStage;
         boardCount = 0;
     }
 

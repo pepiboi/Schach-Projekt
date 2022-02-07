@@ -109,6 +109,23 @@ public class Server {
                                 fromTo = streamFromClient.readLine();
                                 System.out.println(fromTo);
                                 pane = streamFromClient.readLine();
+                                if(pane.equals("death")){
+                                    Platform.runLater(() -> {
+                                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/FunctionalClasses/endingViewLoser.fxml"));
+                                        Stage stage = new Stage();
+                                        Scene scene = null;
+                                        try {
+                                            scene = new Scene(fxmlLoader.load());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        stage.setResizable(false);
+                                        stage.setTitle("Ending");
+                                        stage.setScene(scene);
+                                        stage.show();
+                                        LoginController.clientStage.close();
+                                    });
+                                }
                                 System.out.println(pane);
                                 position = streamFromClient.readLine();
                                 System.out.println(position);
@@ -246,7 +263,6 @@ public class Server {
                 streamToClient.println(position);
                 streamToClient.println(id);
                 streamToClient.println(move);
-                //System.out.println(destination);
                 System.out.println("Pane went through");
                 Board.somethingMoved = false;
                 running = false;
@@ -277,38 +293,4 @@ public class Server {
             }
         }
     }
-
-    /*public static String parseID(String fromTo) {
-
-        StringBuilder id = new StringBuilder();
-        try {
-            String[] parseArray = fromTo.split("=");
-            System.out.println("parse = ");
-            String parseComma = parseArray[1];
-            String[] parseCommaArray = parseComma.split(",");
-            System.out.println("parse ,");
-            String idString = parseCommaArray[0];
-            char[] idCharArray = idString.toCharArray();
-            for (int i = 0; i < idCharArray.length; i++) {
-                id.append(idCharArray[i]);
-                System.out.print(idCharArray[i]);
-            }
-        *//*String[] parseArray = fromTo.split(" ");
-        if (parseArray[1].contains("ImageView")){
-            String[] parseEquals = parseArray[1].split("=");
-            char[] idCharArray = parseEquals[1].toCharArray();
-            for (int i = 0; i < idCharArray.length-1; i++) {
-                id += idCharArray[i];
-            }
-        }*//*
-        } catch (IndexOutOfBoundsException ioobe) {
-            System.out.println("IndexOutOfBoundsException");
-        }
-        return id.toString();
-    }*/
-
-    /*public static void main(String[] args) {
-     *//*Server server = new Server();
-        server.connect();*//*
-    }*/
 }
