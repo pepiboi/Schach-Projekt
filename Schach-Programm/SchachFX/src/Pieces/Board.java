@@ -699,7 +699,7 @@ public class Board {
                 if (GridPane.getColumnIndex(destination) < GridPane.getColumnIndex(chesspiece)) {
                     for (int i = 1; i <= (GridPane.getColumnIndex(chesspiece) - GridPane.getColumnIndex(destination)); i++) {
                         if (chessboard[GridPane.getColumnIndex(chesspiece) - i][GridPane.getRowIndex(chesspiece)] != null &&
-                                !(chessboard[GridPane.getColumnIndex(chesspiece) - i][GridPane.getRowIndex(chesspiece)].toString().contains(getOpposite()))){
+                                GridPane.getColumnIndex(destination) != (GridPane.getColumnIndex(chesspiece) - i)){
                             System.out.println("Something in the way.");
                             break;
                         } else if ((GridPane.getColumnIndex(chesspiece) - i) == GridPane.getColumnIndex(destination)) {
@@ -717,7 +717,7 @@ public class Board {
                 } else {
                     for (int i = 1; i <= (GridPane.getColumnIndex(destination) - GridPane.getColumnIndex(chesspiece)); i++) {
                         if (chessboard[GridPane.getColumnIndex(chesspiece) + i][GridPane.getRowIndex(chesspiece)] != null &&
-                                !(chessboard[GridPane.getColumnIndex(chesspiece) + i][GridPane.getRowIndex(chesspiece)].toString().contains(getOpposite()))){
+                                GridPane.getColumnIndex(destination) != (GridPane.getColumnIndex(chesspiece) + i)){
                             System.out.println("Something in the way.");
                             break;
                         } else if ((GridPane.getColumnIndex(chesspiece) + i) == GridPane.getColumnIndex(destination)) {
@@ -737,7 +737,7 @@ public class Board {
                 if (GridPane.getRowIndex(destination) < GridPane.getRowIndex(chesspiece)) {
                     for (int i = 1; i <= (GridPane.getRowIndex(chesspiece) - GridPane.getRowIndex(destination)); i++) {
                         if (chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - i] != null &&
-                                !(chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) - i].toString().contains(getOpposite()))){
+                                GridPane.getRowIndex(destination) != (GridPane.getRowIndex(chesspiece) - i)){
                             System.out.println("Something in the way.");
                             break;
                         } else if ((GridPane.getRowIndex(chesspiece) - i) == GridPane.getRowIndex(destination)) {
@@ -756,7 +756,7 @@ public class Board {
                 } else {
                     for (int i = 1; i <= (GridPane.getRowIndex(destination) - GridPane.getRowIndex(chesspiece)); i++) {
                         if (chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) + i] != null &&
-                                !(chessboard[GridPane.getColumnIndex(chesspiece)][GridPane.getRowIndex(chesspiece) + i].toString().contains(getOpposite()))){
+                                GridPane.getRowIndex(destination) != (GridPane.getRowIndex(chesspiece) + i)){
                             System.out.println("Something in the way.");
                             break;
                         } else if ((GridPane.getRowIndex(chesspiece) + i) == GridPane.getRowIndex(destination)) {

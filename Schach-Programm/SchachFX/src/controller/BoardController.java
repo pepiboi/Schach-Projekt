@@ -219,7 +219,7 @@ public class BoardController implements Initializable {
                     pawnPane = selectedPane;
                 } else if (selectedPane.getId().contains("white")) {
                     if (clickedBlackPawn) {
-                        Board.killPawn(pawnPane, selectedPane);
+                        Board.killBlackPawn(pawnPane, selectedPane);
                         if (Board.somethingMoved == true) {
                             System.out.println("Before SendCurrentPosition");
                             Server.sendCurrentPositionKillS("pawnPane", Board.positionMoved, Board.id, destinationID);
